@@ -3,57 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CLASSIFIED: File #HS-2018-SUSLIK</title>
+  <title>Introducing Harlen Suslik</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0a0f0a;
-      --surface: #0f160f;
-      --surface-2: #141e14;
-      --border: rgba(34,197,94,0.12);
-      --text: #e8efe8;
-      --text-dim: #7a917a;
-      --green: #22c55e;
-      --green-soft: rgba(34,197,94,0.08);
-      --green-glow: rgba(34,197,94,0.25);
-      --red: #ef4444;
-      --red-soft: rgba(239,68,68,0.08);
-      --amber: #f59e0b;
-      --amber-soft: rgba(245,158,11,0.08);
-      --gold: #d4a853;
+      --bg: #000000;
+      --surface: #0a0a0a;
+      --surface-2: #1d1d1f;
+      --border: rgba(255,255,255,0.08);
+      --text: #f5f5f7;
+      --text-dim: #86868b;
+      --blue: #2997ff;
+      --blue-soft: rgba(41,151,255,0.08);
+      --blue-glow: rgba(41,151,255,0.25);
+      --purple: #bf5af2;
+      --green: #30d158;
+      --orange: #ff9f0a;
+      --red: #ff453a;
+      --pink: #ff375f;
+      --gradient-1: linear-gradient(135deg, #2997ff, #bf5af2);
+      --gradient-2: linear-gradient(135deg, #30d158, #2997ff);
+      --gradient-3: linear-gradient(135deg, #ff9f0a, #ff375f);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.5;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Scanline overlay */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.03) 2px,
-        rgba(0,0,0,0.03) 4px
-      );
-      pointer-events: none;
-      z-index: 9997;
-    }
-
-    /* Splash / Classification Screen */
+    /* Splash - Keynote intro */
     .splash {
       position: fixed;
       inset: 0;
@@ -65,787 +52,725 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      transition: opacity 0.6s, visibility 0.6s;
+      transition: opacity 0.8s ease, visibility 0.8s;
     }
 
     .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-    .splash-icon {
-      width: 100px;
-      height: 100px;
-      border: 3px solid var(--green);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
+    .splash-logo {
+      width: 80px;
+      height: 80px;
       margin-bottom: 2rem;
-      animation: pulse-ring 2s ease-in-out infinite;
-      box-shadow: 0 0 40px var(--green-glow);
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.2s forwards;
     }
 
-    @keyframes pulse-ring {
-      0%, 100% { box-shadow: 0 0 20px var(--green-glow); }
-      50% { box-shadow: 0 0 60px var(--green-glow), 0 0 100px rgba(34,197,94,0.1); }
-    }
+    .splash-logo svg { width: 100%; height: 100%; }
 
-    .splash-classification {
-      font-family: 'Special Elite', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
+    .splash-event {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 1rem;
-      padding: 0.5rem 1.5rem;
-      border: 1px solid var(--green);
-      display: inline-block;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.4s forwards;
     }
 
     .splash h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 5vw, 3.5rem);
-      margin-bottom: 1rem;
-      color: var(--text);
+      font-size: clamp(2.5rem, 7vw, 5rem);
       font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.6s forwards;
     }
 
-    .splash h1 span { color: var(--green); }
+    .splash h1 .gradient-text {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
     .splash p {
-      font-size: 1rem;
+      font-size: 1.2rem;
       color: var(--text-dim);
-      max-width: 520px;
-      margin-bottom: 2.5rem;
-      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.8s forwards;
     }
 
-    .enter-btn {
-      padding: 1.1rem 3rem;
-      background: transparent;
-      border: 2px solid var(--green);
-      border-radius: 0;
-      color: var(--green);
-      font-family: 'Special Elite', monospace;
-      font-size: 0.9rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+    .splash-btn {
+      padding: 1rem 2.5rem;
+      background: var(--blue);
+      border: none;
+      border-radius: 980px;
+      color: white;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .enter-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--green);
-      transform: translateX(-100%);
-      transition: transform 0.3s;
-      z-index: 0;
-    }
-
-    .enter-btn:hover::before { transform: translateX(0); }
-    .enter-btn:hover { color: var(--bg); }
-    .enter-btn span { position: relative; z-index: 1; }
-
-    .splash-footer {
-      position: absolute;
-      bottom: 2rem;
-      font-family: 'Courier Prime', monospace;
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      opacity: 0.4;
-      letter-spacing: 0.1em;
-    }
-
-    /* Fixed elements */
-    .threat-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 9998;
-      padding: 0.5rem 2rem;
-      background: var(--red);
-      color: white;
-      font-family: 'Special Elite', monospace;
-      font-size: 0.75rem;
-      text-align: center;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
       opacity: 0;
-      transform: translateY(-100%);
-      transition: all 0.5s;
+      animation: fadeIn 1s ease-out 1s forwards;
     }
 
-    .threat-bar.visible { opacity: 1; transform: translateY(0); }
+    .splash-btn:hover { background: #0077ed; transform: scale(1.02); }
 
-    .status-panel {
+    .splash-date {
+      position: absolute;
+      bottom: 2.5rem;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      opacity: 0;
+      animation: fadeIn 1s ease-out 1.2s forwards;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Navigation pill */
+    .nav-pill {
       position: fixed;
-      top: 3.5rem;
-      right: 2rem;
+      top: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 9999;
-      padding: 1rem 1.5rem;
-      background: var(--surface-2);
-      border: 1px solid var(--green);
-      border-radius: 0;
+      padding: 0.5rem 1.5rem;
+      background: rgba(29,29,31,0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 980px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
       opacity: 0;
       transition: opacity 0.5s;
-      font-family: 'Courier Prime', monospace;
-    }
-
-    .status-panel.visible { opacity: 1; }
-
-    .status-label {
-      font-size: 0.55rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--green);
-      margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
     }
 
-    .status-label::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: blink 1s ease-in-out infinite;
-    }
+    .nav-pill.visible { opacity: 1; }
+    .nav-pill .dot { width: 6px; height: 6px; background: var(--blue); border-radius: 50%; }
 
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-
-    .status-value { font-size: 1.2rem; font-weight: 700; color: var(--text); }
-    .status-sub { font-size: 0.6rem; color: var(--red); margin-top: 0.25rem; }
-
-    /* Container & Typography */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
-    .display { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
-    .label {
-      font-family: 'Special Elite', monospace;
-      font-size: 0.65rem;
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--green);
-    }
-    .mono { font-family: 'Courier Prime', monospace; }
+    /* Container */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); }
 
     /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       text-align: center;
       padding: 6rem 2rem 4rem;
       position: relative;
+      overflow: hidden;
     }
 
     .hero-glow {
       position: absolute;
-      top: 30%;
+      top: 20%;
       left: 50%;
       transform: translateX(-50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
-      filter: blur(100px);
-      opacity: 0.15;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, var(--blue-glow) 0%, rgba(191,90,242,0.08) 40%, transparent 70%);
+      filter: blur(80px);
+      opacity: 0.4;
+      pointer-events: none;
     }
 
-    .hero-file-number {
-      font-family: 'Courier Prime', monospace;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      letter-spacing: 0.2em;
+    .hero-overline {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
       margin-bottom: 1.5rem;
       opacity: 0;
-      animation: fadeUp 1s ease-out 0.1s forwards;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.6rem 1.5rem;
-      background: var(--red-soft);
-      border: 1px solid rgba(239,68,68,0.3);
-      font-family: 'Special Elite', monospace;
-      font-size: 0.7rem;
-      color: var(--red);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 1s ease-out 0.2s forwards;
+      animation: heroFade 1s ease-out 0.1s forwards;
     }
 
     .hero-title {
-      font-size: clamp(2.2rem, 7vw, 5.5rem);
-      max-width: 1000px;
-      margin-bottom: 2rem;
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      margin-bottom: 1.5rem;
       opacity: 0;
-      animation: fadeUp 1s ease-out 0.4s forwards;
+      animation: heroFade 1s ease-out 0.3s forwards;
     }
 
-    .hero-title .name { color: var(--green); display: block; }
+    .hero-title .line2 {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-    .hero-subtitle {
-      font-size: clamp(1rem, 2vw, 1.3rem);
+    .hero-tagline {
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 300;
       color: var(--text-dim);
-      max-width: 700px;
-      line-height: 1.8;
+      max-width: 650px;
+      line-height: 1.6;
       margin-bottom: 3rem;
       opacity: 0;
-      animation: fadeUp 1s ease-out 0.6s forwards;
+      animation: heroFade 1s ease-out 0.5s forwards;
     }
 
-    .hero-subtitle .redacted {
-      background: var(--text-dim);
-      color: var(--text-dim);
-      padding: 0 0.3rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      user-select: none;
-    }
-
-    .hero-subtitle .redacted.revealed { background: transparent; color: var(--green); }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Sections */
-    section { padding: clamp(5rem, 12vw, 8rem) 0; }
-    .section-header { text-align: center; max-width: 800px; margin: 0 auto 4rem; }
-    .section-title { font-size: clamp(1.8rem, 4.5vw, 3.2rem); margin-top: 1rem; margin-bottom: 1.5rem; }
-    .section-desc { font-size: 1rem; color: var(--text-dim); line-height: 1.8; }
-
-    /* Dossier Section */
-    .dossier-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-    .dossier-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 3rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .dossier-photo {
-      width: 280px;
-      height: 340px;
-      background: var(--surface-2);
-      border: 2px solid var(--green);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .hero-image {
+      width: clamp(200px, 30vw, 320px);
+      height: clamp(240px, 36vw, 390px);
+      border-radius: 24px;
       overflow: hidden;
+      position: relative;
+      opacity: 0;
+      animation: heroFade 1s ease-out 0.7s forwards;
+      box-shadow: 0 30px 80px rgba(41,151,255,0.15), 0 0 0 1px rgba(255,255,255,0.05);
     }
 
-    .dossier-photo-placeholder {
-      font-size: 5rem;
-      opacity: 0.3;
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+      transition: filter 0.5s;
     }
 
-    .dossier-photo-stamp {
+    .hero-image:hover img { filter: grayscale(0%); }
+
+    .hero-image-label {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-family: 'Special Elite', monospace;
-      font-size: 0.6rem;
-      color: var(--red);
-      border: 2px solid var(--red);
-      padding: 0.25rem 0.5rem;
-      transform: rotate(12deg);
-      letter-spacing: 0.15em;
-    }
-
-    .dossier-fields {}
-
-    .dossier-field {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 1rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-    }
-
-    .dossier-field-label {
-      font-family: 'Special Elite', monospace;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1.5rem 1.25rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
       font-size: 0.7rem;
-      color: var(--text-dim);
+      font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding-top: 0.1rem;
+      color: var(--blue);
     }
 
-    .dossier-field-value { color: var(--text); }
-    .dossier-field-value .highlight { color: var(--green); font-weight: 600; }
+    @keyframes heroFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Timeline */
-    .timeline { max-width: 800px; margin: 0 auto; position: relative; }
+    /* Section styles */
+    section { padding: clamp(6rem, 15vw, 10rem) 0; }
+    .section-header { text-align: center; max-width: 800px; margin: 0 auto 5rem; }
 
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 24px;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--green), var(--green-glow), var(--green));
-    }
-
-    .timeline-item {
-      display: flex;
-      gap: 2rem;
-      margin-bottom: 3rem;
-      position: relative;
-    }
-
-    .timeline-dot {
-      width: 50px;
-      min-width: 50px;
-      height: 50px;
-      background: var(--surface-2);
-      border: 2px solid var(--green);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .timeline-content {
-      padding: 1.5rem 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      flex: 1;
-    }
-
-    .timeline-year {
-      font-family: 'Special Elite', monospace;
-      font-size: 0.7rem;
-      color: var(--green);
-      letter-spacing: 0.15em;
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
-
-    .timeline-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.7; }
-
-    .timeline-threat {
-      display: inline-block;
-      margin-top: 0.75rem;
-      padding: 0.3rem 0.75rem;
-      font-family: 'Special Elite', monospace;
-      font-size: 0.6rem;
+    .section-overline {
+      font-size: 0.75rem;
+      font-weight: 600;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-    }
-
-    .threat-low { background: var(--green-soft); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
-    .threat-medium { background: var(--amber-soft); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
-    .threat-high { background: var(--red-soft); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
-    .threat-critical { background: var(--red); color: white; animation: threat-pulse 1.5s ease-in-out infinite; }
-
-    @keyframes threat-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-
-    /* Intercepted Comms */
-    .comms-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-    .comms-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .comm-card {
-      padding: 2rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-    }
-
-    .comm-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
       margin-bottom: 1rem;
     }
 
-    .comm-avatar {
-      width: 40px;
-      height: 40px;
-      background: var(--green-soft);
-      border: 1px solid var(--green);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
+    .overline-blue { color: var(--blue); }
+    .overline-purple { color: var(--purple); }
+    .overline-green { color: var(--green); }
+    .overline-orange { color: var(--orange); }
+
+    .section-title {
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
     }
 
-    .comm-meta { font-size: 0.75rem; }
-    .comm-meta strong { display: block; color: var(--text); font-size: 0.85rem; }
-    .comm-meta span { color: var(--text-dim); }
-
-    .comm-body {
-      font-size: 0.9rem;
+    .section-desc {
+      font-size: 1.1rem;
+      font-weight: 300;
       color: var(--text-dim);
       line-height: 1.7;
-      font-style: italic;
-      padding-left: 1rem;
-      border-left: 2px solid var(--green);
     }
 
-    /* Threat Assessment Calculator */
-    .calculator-box {
-      max-width: 650px;
-      margin: 0 auto;
-      padding: 3rem;
+    /* Product specs section */
+    .specs-section {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
-    .calc-question { margin-bottom: 1.5rem; }
-    .calc-question label {
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .spec-card {
+      padding: 3rem 2.5rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+
+    .spec-card:last-child { border-right: none; }
+
+    .spec-icon {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
       display: block;
-      font-family: 'Special Elite', monospace;
-      font-size: 0.75rem;
+    }
+
+    .spec-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      line-height: 1;
+    }
+
+    .spec-value .gradient-text {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .spec-label {
+      font-size: 0.8rem;
       color: var(--text-dim);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-weight: 400;
       margin-bottom: 0.5rem;
     }
 
-    .calc-question select, .calc-question input {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.9rem;
-    }
-
-    .calc-question select:focus, .calc-question input:focus { outline: none; border-color: var(--green); }
-
-    .calc-btn {
-      width: 100%;
-      padding: 1.1rem;
-      background: var(--green);
-      border: none;
-      color: var(--bg);
-      font-family: 'Special Elite', monospace;
-      font-size: 0.9rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s;
+    .spec-note {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      opacity: 0.6;
       margin-top: 0.5rem;
     }
 
-    .calc-btn:hover { box-shadow: 0 0 30px var(--green-glow); }
+    /* Feature cards */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
 
-    .calc-result {
+    .feature-card {
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .feature-card:hover { border-color: rgba(255,255,255,0.15); }
+
+    .feature-card.full-width { grid-column: span 2; }
+
+    .feature-icon-bar {
+      display: inline-flex;
+      padding: 0.5rem 1rem;
+      border-radius: 980px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .bar-blue { background: var(--blue-soft); color: var(--blue); }
+    .bar-purple { background: rgba(191,90,242,0.08); color: var(--purple); }
+    .bar-green { background: rgba(48,209,88,0.08); color: var(--green); }
+    .bar-orange { background: rgba(255,159,10,0.08); color: var(--orange); }
+
+    .feature-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* Benchmark comparison */
+    .benchmark-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .benchmark-table {
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .benchmark-row {
+      display: grid;
+      grid-template-columns: 1fr 140px 140px;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+
+    .benchmark-row.header {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding-bottom: 1rem;
+    }
+
+    .benchmark-row .metric { font-size: 0.9rem; font-weight: 500; }
+
+    .benchmark-row .harlen {
+      text-align: center;
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 0.95rem;
+    }
+
+    .benchmark-row .others {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    .benchmark-row .winner { position: relative; }
+    .benchmark-row .winner::after {
+      content: '✓';
+      margin-left: 0.35rem;
+      font-size: 0.7rem;
+    }
+
+    /* Timeline (product evolution) */
+    .evolution-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .evo-card {
+      padding: 2rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .evo-card:hover { transform: translateY(-4px); border-color: var(--blue); }
+
+    .evo-version {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+
+    .evo-year {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .evo-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .evo-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .evo-badge {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 980px;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+
+    .badge-blue { background: var(--blue-soft); color: var(--blue); }
+    .badge-green { background: rgba(48,209,88,0.08); color: var(--green); }
+    .badge-purple { background: rgba(191,90,242,0.08); color: var(--purple); }
+    .badge-orange { background: rgba(255,159,10,0.08); color: var(--orange); }
+
+    /* Reviews */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .review-card {
+      padding: 2.5rem 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .review-stars { color: var(--orange); font-size: 0.9rem; letter-spacing: 0.15em; margin-bottom: 1rem; }
+
+    .review-text {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .review-author { font-size: 0.8rem; font-weight: 600; }
+    .review-role { font-size: 0.7rem; color: var(--text-dim); }
+
+    /* Configurator */
+    .config-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .configurator {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+    }
+
+    .config-group { margin-bottom: 2rem; }
+
+    .config-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+
+    .config-options {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .config-option {
+      padding: 0.6rem 1.25rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 980px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .config-option:hover { border-color: var(--blue); }
+    .config-option.selected { background: var(--blue); border-color: var(--blue); color: white; }
+
+    .config-summary {
       margin-top: 2rem;
       padding: 2rem;
-      background: var(--bg);
-      border: 2px solid var(--red);
+      background: var(--surface-2);
+      border-radius: 16px;
       text-align: center;
       display: none;
     }
 
-    .calc-result.visible { display: block; animation: fadeUp 0.5s ease-out; }
+    .config-summary.visible { display: block; animation: fadeIn 0.4s ease-out; }
 
-    .calc-result-level {
-      font-family: 'Special Elite', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 0.5rem;
-    }
-
-    .calc-result-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
+    .config-price {
+      font-size: 2.5rem;
       font-weight: 800;
-      color: var(--red);
-      margin-bottom: 0.5rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
     }
 
-    .calc-result-msg { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
+    .config-price .gradient-text {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-    /* Skill Levels */
-    .skills-grid {
+    .config-verdict { font-size: 0.9rem; color: var(--text-dim); font-weight: 300; }
+
+    .config-btn {
+      margin-top: 1.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--blue);
+      border: none;
+      border-radius: 980px;
+      color: white;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .config-btn:hover { background: #0077ed; }
+
+    /* Availability map */
+    .availability-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       max-width: 900px;
       margin: 0 auto;
     }
 
-    .skill-card {
-      padding: 2rem;
+    .avail-card {
+      padding: 2.5rem 2rem;
       background: var(--surface);
       border: 1px solid var(--border);
+      border-radius: 20px;
+      text-align: center;
+      transition: transform 0.3s;
     }
 
-    .skill-name {
-      font-family: 'Special Elite', monospace;
+    .avail-card:hover { transform: translateY(-4px); }
+
+    .avail-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
+    .avail-city { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .avail-since { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1rem; }
+
+    .avail-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 980px;
       font-size: 0.7rem;
-      color: var(--text-dim);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      font-weight: 600;
     }
 
-    .skill-bar-track {
-      height: 8px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      margin-bottom: 0.5rem;
-      overflow: hidden;
+    .status-active {
+      background: rgba(48,209,88,0.08);
+      color: var(--green);
     }
 
-    .skill-bar-fill {
-      height: 100%;
+    .status-active::before {
+      content: '';
+      width: 6px;
+      height: 6px;
       background: var(--green);
-      width: 0;
-      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
     }
 
-    .skill-bar-fill.amber { background: var(--amber); }
-    .skill-bar-fill.red { background: var(--red); }
-    .skill-bar-fill.overflow {
-      background: var(--red);
-      position: relative;
-    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    .skill-bar-fill.overflow::after {
-      content: 'EXCEEDS SCALE';
-      position: absolute;
-      right: 0.5rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: 'Special Elite', monospace;
-      font-size: 0.45rem;
-      letter-spacing: 0.15em;
-      color: white;
-      white-space: nowrap;
-    }
-
-    .skill-value {
-      font-family: 'Courier Prime', monospace;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    /* Evidence Board */
-    .evidence-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-    .evidence-grid {
+    /* Unboxing */
+    .unboxing-steps {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
       max-width: 1000px;
       margin: 0 auto;
     }
 
-    .evidence-card {
-      padding: 2rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
+    .unbox-step {
       text-align: center;
-      position: relative;
-      cursor: pointer;
-      transition: border-color 0.3s;
+      padding: 2rem 1.5rem;
     }
 
-    .evidence-card:hover { border-color: var(--green); }
-
-    .evidence-stamp {
-      position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
-      font-family: 'Special Elite', monospace;
-      font-size: 0.5rem;
-      padding: 0.2rem 0.5rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .stamp-verified { background: var(--green-soft); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
-    .stamp-classified { background: var(--red-soft); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
-    .stamp-pending { background: var(--amber-soft); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
-
-    .evidence-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-    .evidence-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
-    .evidence-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
-
-    /* Report Generator */
-    .report-form {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      max-width: 700px;
-      margin: 0 auto 2rem;
-    }
-
-    .report-form input, .report-form select {
-      padding: 0.85rem 1rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.9rem;
-    }
-
-    .report-form input:focus, .report-form select:focus { outline: none; border-color: var(--green); }
-
-    .report-generate-btn {
-      grid-column: span 2;
-      padding: 1.1rem;
-      background: var(--green);
-      border: none;
-      color: var(--bg);
-      font-family: 'Special Elite', monospace;
-      font-size: 0.9rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-
-    .report-output {
-      display: none;
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 3rem;
-      background: #f5f0e6;
-      color: #1a1a1a;
-      font-family: 'Courier Prime', monospace;
-      font-size: 0.85rem;
-      line-height: 1.9;
-      position: relative;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-    }
-
-    .report-output.visible { display: block; animation: fadeUp 0.5s ease-out; }
-
-    .report-seal {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      width: 80px;
-      height: 80px;
-      background: var(--red);
+    .unbox-number {
+      width: 48px;
+      height: 48px;
+      background: var(--gradient-1);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-family: 'Special Elite', monospace;
-      font-size: 0.5rem;
-      text-align: center;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      line-height: 1.3;
-      box-shadow: 0 4px 15px rgba(239,68,68,0.4);
-    }
-
-    .report-output h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    /* Counter section */
-    .counter-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .counter-card {
-      padding: 2rem 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      text-align: center;
-    }
-
-    .counter-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
+      font-size: 1.1rem;
       font-weight: 800;
-      color: var(--green);
-      margin-bottom: 0.25rem;
+      margin: 0 auto 1.25rem;
     }
 
-    .counter-label {
-      font-family: 'Special Elite', monospace;
-      font-size: 0.6rem;
-      color: var(--text-dim);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .counter-note {
-      font-size: 0.7rem;
-      color: var(--red);
-      margin-top: 0.5rem;
-      font-style: italic;
-    }
-
-    /* Typing effect */
-    .typing-cursor::after {
-      content: '|';
-      animation: cursor-blink 0.8s step-end infinite;
-      color: var(--green);
-    }
-
-    @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .unbox-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .unbox-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
 
     /* CTA */
     .cta-section {
       text-align: center;
-      padding: 8rem 2rem;
-      background: radial-gradient(ellipse 80% 50% at 50% 100%, var(--green-soft) 0%, transparent 60%), var(--bg);
+      padding: 10rem 2rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .cta-title { font-size: clamp(1.8rem, 4vw, 3.5rem); margin-bottom: 1.5rem; }
-    .cta-desc { font-size: 1rem; color: var(--text-dim); max-width: 600px; margin: 0 auto 3rem; line-height: 1.8; }
+    .cta-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--blue-glow) 0%, rgba(191,90,242,0.1) 40%, transparent 70%);
+      filter: blur(80px);
+      opacity: 0.3;
+      pointer-events: none;
+    }
 
-    .cta-link {
+    .cta-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .cta-desc {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      font-weight: 300;
+      max-width: 550px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .cta-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 1.1rem 2.5rem;
+      gap: 0.5rem;
+      padding: 1rem 2.25rem;
+      border-radius: 980px;
       text-decoration: none;
-      font-family: 'Special Elite', monospace;
-      font-size: 0.85rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      transition: transform 0.3s;
-      background: var(--green);
-      color: var(--bg);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.3s;
     }
 
-    .cta-link:hover { transform: translateY(-2px); box-shadow: 0 10px 30px var(--green-glow); }
+    .cta-btn.primary { background: var(--blue); color: white; }
+    .cta-btn.primary:hover { background: #0077ed; transform: scale(1.02); }
+    .cta-btn.secondary { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); }
+    .cta-btn.secondary:hover { border-color: var(--blue); }
 
     /* Footer */
     footer {
@@ -854,56 +779,40 @@
       border-top: 1px solid var(--border);
     }
 
-    .footer-logo {
-      font-family: 'Special Elite', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 0.5rem;
-    }
-
-    .footer-tagline {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      letter-spacing: 0.1em;
-      margin-bottom: 2rem;
-    }
-
-    .footer-disclaimer {
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      opacity: 0.4;
-      max-width: 550px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
+    .footer-logo { font-size: 0.85rem; font-weight: 600; color: var(--text-dim); margin-bottom: 0.5rem; }
+    .footer-sub { font-size: 0.7rem; color: var(--text-dim); opacity: 0.5; margin-bottom: 1.5rem; }
+    .footer-disclaimer { font-size: 0.65rem; color: var(--text-dim); opacity: 0.35; max-width: 500px; margin: 0 auto; line-height: 1.7; }
 
     /* Scroll reveal */
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* Responsive */
     @media (max-width: 1024px) {
-      .dossier-grid { grid-template-columns: 1fr; }
-      .dossier-photo { width: 100%; max-width: 280px; margin: 0 auto; }
-      .comms-grid, .skills-grid, .evidence-grid { grid-template-columns: 1fr; }
-      .counter-grid { grid-template-columns: repeat(2, 1fr); }
-      .status-panel { display: none; }
-      .report-form { grid-template-columns: 1fr; }
-      .report-generate-btn { grid-column: span 1; }
+      .specs-grid { grid-template-columns: 1fr; }
+      .spec-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .spec-card:last-child { border-bottom: none; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .feature-card.full-width { grid-column: span 1; }
+      .evolution-grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .availability-grid { grid-template-columns: 1fr; }
+      .unboxing-steps { grid-template-columns: repeat(2, 1fr); }
+      .benchmark-row { grid-template-columns: 1fr 100px 100px; }
     }
 
     @media (max-width: 640px) {
-      .counter-grid { grid-template-columns: 1fr 1fr; }
+      .evolution-grid { grid-template-columns: 1fr; }
+      .unboxing-steps { grid-template-columns: 1fr; }
     }
 
-    /* Konami Easter Egg */
+    /* Konami */
     .konami-overlay {
       display: none;
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(20px);
       z-index: 99999;
       justify-content: center;
       align-items: center;
@@ -915,30 +824,26 @@
     .konami-overlay.active { display: flex; }
 
     .konami-overlay h2 {
-      font-family: 'Playfair Display', serif;
       font-size: 3rem;
-      color: var(--green);
+      font-weight: 800;
       margin-bottom: 1rem;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .konami-overlay p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin-bottom: 2rem; }
+    .konami-overlay p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin-bottom: 2rem; font-weight: 300; }
 
     .konami-close {
       padding: 0.75rem 2rem;
-      background: var(--green);
+      background: var(--blue);
       border: none;
-      color: var(--bg);
-      font-family: 'Special Elite', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
+      border-radius: 980px;
+      color: white;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
       cursor: pointer;
-    }
-
-    /* Print */
-    @media print {
-      body * { visibility: hidden; }
-      .report-output, .report-output * { visibility: visible; }
-      .report-output { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
     }
   </style>
 </head>
@@ -946,464 +851,361 @@
 
   <!-- Splash -->
   <div class="splash" id="splash">
-    <div class="splash-icon">🔒</div>
-    <div class="splash-classification">Top Secret // Eyes Only</div>
-    <h1>CLASSIFIED FILE: <span>SUSLIK, H.</span></h1>
-    <p>You are about to access a restricted intelligence dossier compiled by the Bureau of Entrepreneurial Threat Assessment. This file contains evidence of dangerously high ambition, unregulated business instincts, and a suspicious trajectory from window cleaning to continental marketing domination.</p>
-    <button class="enter-btn" id="enterBtn"><span>I Accept the Risk</span></button>
-    <p class="splash-footer">BETA // FILE #HS-2018-OPERATIO // CLEARANCE LEVEL: UNLIMITED AMBITION</p>
+    <div class="splash-logo">
+      <svg viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" stroke="white" stroke-width="1.5" opacity="0.2"/>
+        <text x="40" y="48" text-anchor="middle" fill="white" font-size="28" font-weight="800" font-family="Inter, sans-serif">HS</text>
+      </svg>
+    </div>
+    <div class="splash-event">Special Event</div>
+    <h1>Introducing <span class="gradient-text">Harlen.</span></h1>
+    <p>The most powerful CEO we've ever created.</p>
+    <button class="splash-btn" id="enterBtn">Watch the Event</button>
+    <div class="splash-date">February 2026 &bull; A Product Years in the Making</div>
   </div>
 
-  <!-- Fixed UI -->
-  <div class="threat-bar" id="threatBar">
-    ⚠ Active Threat Level: MAXIMUM ENTREPRENEURSHIP ⚠ Subject is currently operating across 3 cities ⚠ Containment unlikely
-  </div>
-
-  <div class="status-panel" id="statusPanel">
-    <div class="status-label">Live Venture Count</div>
-    <div class="status-value" id="ventureCount">4</div>
-    <div class="status-sub">↑ INCREASING</div>
+  <!-- Nav Pill -->
+  <div class="nav-pill" id="navPill">
+    <span class="dot"></span> Harlen Suslik &bull; Now Available in 3 Markets
   </div>
 
   <!-- Konami Easter Egg -->
   <div class="konami-overlay" id="konamiOverlay">
-    <h2>ACCESS GRANTED</h2>
-    <p>You've unlocked Harlen's actual superpower: he makes everyone around him more successful. That's the real threat. It's contagious.</p>
-    <button class="konami-close" onclick="document.getElementById('konamiOverlay').classList.remove('active')">Acknowledge</button>
+    <h2>One More Thing.</h2>
+    <p>The real product isn't Harlen. It's the confidence he gives every business he touches. That's the feature no competitor can replicate.</p>
+    <button class="konami-close" onclick="document.getElementById('konamiOverlay').classList.remove('active')">Close</button>
   </div>
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero" id="heroSection">
     <div class="hero-glow"></div>
-    <div class="hero-file-number mono">FILE #HS-2018-OPERATIO // OPENED: 2018-03-14 // STATUS: ACTIVE</div>
-    <div class="hero-badge">Bureau of Entrepreneurial Threat Assessment</div>
-    <h1 class="display hero-title" id="secretTrigger">
-      Subject:<br>
-      <span class="name">Harlen Suslik</span>
+    <div class="hero-overline">The Next Generation of CEO</div>
+    <h1 class="hero-title">
+      Harlen Suslik.<br>
+      <span class="line2">Redefining the game.</span>
     </h1>
-    <p class="hero-subtitle">
-      An ongoing investigation into how one individual went from cleaning windows in the Greater Toronto Area to commanding a digital marketing operation spanning <span class="redacted" onclick="this.classList.toggle('revealed')">three countries</span> in under seven years. The Bureau's conclusion: this level of success <span class="redacted" onclick="this.classList.toggle('revealed')">cannot be explained by conventional ambition</span>.
+    <p class="hero-tagline">
+      Built from the ground up with a revolutionary architecture that transforms
+      window cleaning expertise into continental marketing dominance. No other CEO
+      in its class comes close.
     </p>
+    <div class="hero-image">
+      <img src="https://www.operatiomarketing.com/wp-content/uploads/2024/01/Image-Place-Holder-895x1024.png" alt="Harlen Suslik" loading="eager">
+      <div class="hero-image-label">Harlen Suslik &bull; Founder &amp; CEO</div>
+    </div>
   </section>
 
-  <!-- Subject Dossier -->
-  <section class="dossier-section">
+  <!-- Product Specs -->
+  <section class="specs-section">
     <div class="container">
-      <div class="section-header reveal">
-        <p class="label">Exhibit A</p>
-        <h2 class="display section-title">Subject Dossier</h2>
-      </div>
-      <div class="dossier-grid reveal">
-        <div class="dossier-photo">
-          <div class="dossier-photo-placeholder">📸</div>
-          <div class="dossier-photo-stamp">CLASSIFIED</div>
+      <div class="specs-grid reveal">
+        <div class="spec-card">
+          <span class="spec-icon">🧠</span>
+          <div class="spec-value"><span class="gradient-text">BBA</span></div>
+          <div class="spec-label">York University Processor</div>
+          <div class="spec-note">Entrepreneurship &amp; Finance dual-core</div>
         </div>
-        <div class="dossier-fields">
-          <div class="dossier-field">
-            <div class="dossier-field-label">Full Name</div>
-            <div class="dossier-field-value"><span class="highlight">Harlen Suslik</span></div>
-          </div>
-          <div class="dossier-field">
-            <div class="dossier-field-label">Known Alias</div>
-            <div class="dossier-field-value">"The CEO" / "The Operatio Guy"</div>
-          </div>
-          <div class="dossier-field">
-            <div class="dossier-field-label">Primary Base</div>
-            <div class="dossier-field-value">Greater Toronto Area, Ontario, Canada</div>
-          </div>
-          <div class="dossier-field">
-            <div class="dossier-field-label">Secondary Bases</div>
-            <div class="dossier-field-value">Vancouver, BC &bull; Miami, FL</div>
-          </div>
-          <div class="dossier-field">
-            <div class="dossier-field-label">Education</div>
-            <div class="dossier-field-value">BBA, Entrepreneurship &amp; Finance<br>York University (2013&ndash;2017)</div>
-          </div>
-          <div class="dossier-field">
-            <div class="dossier-field-label">Current Cover</div>
-            <div class="dossier-field-value"><span class="highlight">CEO &amp; Founder, Operatio Marketing</span></div>
-          </div>
-          <div class="dossier-field">
-            <div class="dossier-field-label">Threat Level</div>
-            <div class="dossier-field-value" style="color: var(--red); font-weight: 700;">MAXIMUM</div>
-          </div>
-          <div class="dossier-field">
-            <div class="dossier-field-label">Status</div>
-            <div class="dossier-field-value" style="color: var(--amber);">UNCONTAINED</div>
-          </div>
+        <div class="spec-card">
+          <span class="spec-icon">🌎</span>
+          <div class="spec-value"><span class="gradient-text">3</span></div>
+          <div class="spec-label">Markets Active</div>
+          <div class="spec-note">Toronto &bull; Vancouver &bull; Miami</div>
+        </div>
+        <div class="spec-card">
+          <span class="spec-icon">📈</span>
+          <div class="spec-value"><span class="gradient-text">90%+</span></div>
+          <div class="spec-label">Client Retention Rate</div>
+          <div class="spec-note">Industry average: LOL</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Timeline of Suspicious Activity -->
+  <!-- Product Evolution -->
   <section>
     <div class="container">
       <div class="section-header reveal">
-        <p class="label">Exhibit B</p>
-        <h2 class="display section-title">Timeline of Suspicious Activity</h2>
-        <p class="section-desc">A chronological record of the subject's escalating pattern of success. Each event represents a further departure from normal entrepreneurial behavior.</p>
+        <p class="section-overline overline-blue">Product Evolution</p>
+        <h2 class="section-title">Every version better<br>than the last.</h2>
+        <p class="section-desc">From the original prototype to the current flagship model, each iteration has pushed the boundaries of what a single CEO can accomplish.</p>
       </div>
-      <div class="timeline reveal">
-        <div class="timeline-item">
-          <div class="timeline-dot">🎓</div>
-          <div class="timeline-content">
-            <div class="timeline-year">2013 &ndash; 2017</div>
-            <div class="timeline-title">Subject Enrolled at York University</div>
-            <div class="timeline-desc">Studied Entrepreneurship and Finance simultaneously. Bureau analysts note this is the academic equivalent of loading two weapons at once. Fellow students reported the subject "always had a business idea" and "never stopped networking." Surveillance inconclusive but concerning.</div>
-            <span class="timeline-threat threat-low">Threat: Emerging</span>
-          </div>
+      <div class="evolution-grid reveal">
+        <div class="evo-card">
+          <div class="evo-version">Version 1.0</div>
+          <div class="evo-year">2013</div>
+          <div class="evo-title">The Prototype</div>
+          <div class="evo-desc">Enrolled at York University. Initial architecture compiled in Entrepreneurship &amp; Finance. Early benchmarks showed promise.</div>
+          <span class="evo-badge badge-blue">Beta</span>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-dot">🧹</div>
-          <div class="timeline-content">
-            <div class="timeline-year">Pre-2018</div>
-            <div class="timeline-title">The Window Cleaning Years</div>
-            <div class="timeline-desc">Subject held VP Operations role at Aurum Window Cleaning &amp; Property Care. While ostensibly cleaning windows, the Bureau believes the subject was actually studying the inner workings of every business he could see through the glass. Additional roles at Jaguar Capital Inc. and Maple Leaf Angels suggest the subject was building an entrepreneurial Rolodex of terrifying proportions.</div>
-            <span class="timeline-threat threat-medium">Threat: Escalating</span>
-          </div>
+        <div class="evo-card">
+          <div class="evo-version">Version 2.0</div>
+          <div class="evo-year">2017</div>
+          <div class="evo-title">Field Testing</div>
+          <div class="evo-desc">Deployed across Aurum Window Cleaning, Jaguar Capital, and Maple Leaf Angels. Multi-industry compatibility confirmed.</div>
+          <span class="evo-badge badge-green">Stable</span>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-dot">🚀</div>
-          <div class="timeline-content">
-            <div class="timeline-year">2018</div>
-            <div class="timeline-title">Operatio Marketing Founded</div>
-            <div class="timeline-desc">The subject identified a "gap in the market." Translation: he saw what every other marketing agency was doing wrong and decided to fix all of it at once. Named the company "Operatio" (Latin for "operation"), because of course he gave his marketing agency a name that sounds like a covert government program.</div>
-            <span class="timeline-threat threat-high">Threat: Significant</span>
-          </div>
+        <div class="evo-card">
+          <div class="evo-version">Version 3.0</div>
+          <div class="evo-year">2018</div>
+          <div class="evo-title">Operatio Launch</div>
+          <div class="evo-desc">Full product launch. Founded Operatio Marketing. Identified market gap and filled it before competitors noticed it existed.</div>
+          <span class="evo-badge badge-purple">GA Release</span>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-dot">📈</div>
-          <div class="timeline-content">
-            <div class="timeline-year">2019</div>
-            <div class="timeline-title">Rapid Team Expansion</div>
-            <div class="timeline-desc">Within one year, the subject had recruited 6 operatives. The Bureau notes that most startups are still figuring out their logo at this stage. The subject was already scaling. Client acquisition rates described by one analyst as "frankly suspicious."</div>
-            <span class="timeline-threat threat-high">Threat: High</span>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot">🔥</div>
-          <div class="timeline-content">
-            <div class="timeline-year">2020</div>
-            <div class="timeline-title">Pandemic? What Pandemic?</div>
-            <div class="timeline-desc">While global commerce collapsed, the subject experienced a "huge boost in new clients." Achieved 90%+ client retention year over year. Bureau analysts have no rational explanation for this. Leading theory: the subject simply refused to acknowledge the existence of economic downturns.</div>
-            <span class="timeline-threat threat-high">Threat: Alarming</span>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot">🌊</div>
-          <div class="timeline-content">
-            <div class="timeline-year">2021</div>
-            <div class="timeline-title">Vancouver Expansion (West Coast Infiltrated)</div>
-            <div class="timeline-desc">Not content with dominating Ontario, the subject opened operations in Vancouver. The Bureau intercepted communications suggesting the subject chose Vancouver because "there were still businesses there that hadn't hired him yet." Concerning.</div>
-            <span class="timeline-threat threat-critical">Threat: Critical</span>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot">🌴</div>
-          <div class="timeline-content">
-            <div class="timeline-year">2023</div>
-            <div class="timeline-title">Miami Expansion (International Incident)</div>
-            <div class="timeline-desc">The subject crossed an international border and established operations in Miami, Florida. This represents a full North American expansion. Multiple intelligence agencies are now involved. The subject was reportedly heard saying he wanted to "tap into new markets," which the Bureau considers an understatement of historic proportions.</div>
-            <span class="timeline-threat threat-critical">Threat: MAXIMUM</span>
-          </div>
+        <div class="evo-card">
+          <div class="evo-version">Version 4.0</div>
+          <div class="evo-year">2023</div>
+          <div class="evo-title">Continental</div>
+          <div class="evo-desc">International expansion. Three cities. Twelve operatives. BBB accredited. The most powerful version yet. And he's not done.</div>
+          <span class="evo-badge badge-orange">Current</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- By the Numbers -->
-  <section class="evidence-section">
-    <div class="container">
-      <div class="section-header reveal">
-        <p class="label">Exhibit C</p>
-        <h2 class="display section-title">By the Numbers</h2>
-        <p class="section-desc">Statistical evidence that the subject's success has exceeded all known parameters for human entrepreneurship.</p>
-      </div>
-      <div class="counter-grid reveal" id="counterGrid">
-        <div class="counter-card">
-          <div class="counter-value" data-target="3">0</div>
-          <div class="counter-label">Cities Infiltrated</div>
-          <div class="counter-note">and counting</div>
-        </div>
-        <div class="counter-card">
-          <div class="counter-value" data-target="12">0</div>
-          <div class="counter-label">Operatives Recruited</div>
-          <div class="counter-note">known</div>
-        </div>
-        <div class="counter-card">
-          <div class="counter-value" data-target="90">0</div>
-          <div class="counter-label">Client Retention %</div>
-          <div class="counter-note">suspiciously high</div>
-        </div>
-        <div class="counter-card">
-          <div class="counter-value" data-target="7">0</div>
-          <div class="counter-label">Years to Domination</div>
-          <div class="counter-note">well under average</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Classified Skill Assessment -->
+  <!-- Features -->
   <section>
     <div class="container">
       <div class="section-header reveal">
-        <p class="label">Exhibit D</p>
-        <h2 class="display section-title">Classified Skill Assessment</h2>
-        <p class="section-desc">Bureau analysts have attempted to quantify the subject's abilities. Several metrics exceeded the measurement scale.</p>
+        <p class="section-overline overline-purple">Breakthrough Features</p>
+        <h2 class="section-title">Capabilities that leave<br>competitors speechless.</h2>
       </div>
-      <div class="skills-grid reveal" id="skillsGrid">
-        <div class="skill-card">
-          <div class="skill-name">Client Acquisition</div>
-          <div class="skill-bar-track"><div class="skill-bar-fill overflow" data-width="100"></div></div>
-          <div class="skill-value"><span>Measurement:</span><span style="color: var(--red);">EXCEEDS SCALE</span></div>
+      <div class="feature-grid reveal">
+        <div class="feature-card">
+          <span class="feature-icon-bar bar-blue">Core Architecture</span>
+          <h3 class="feature-title">Window-to-Boardroom Engine</h3>
+          <div class="feature-desc">A proprietary processing pipeline that converts ground-level operational experience into C-suite strategic vision. While other CEOs studied theory, Harlen studied every business through the glass he cleaned. This isn't a metaphor. He literally cleaned their windows and took notes.</div>
         </div>
-        <div class="skill-card">
-          <div class="skill-name">Strategic Vision</div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="97"></div></div>
-          <div class="skill-value"><span>Measurement:</span><span>97 / 100</span></div>
+        <div class="feature-card">
+          <span class="feature-icon-bar bar-purple">Client Retention</span>
+          <h3 class="feature-title">90%+ Lock-In Technology</h3>
+          <div class="feature-desc">Powered by what engineers call "actually delivering results." Most agencies promise ROI. Harlen's system has a 90%+ client retention rate because the product works so well that leaving feels financially irresponsible. There's no contract lock-in. They just don't want to leave.</div>
         </div>
-        <div class="skill-card">
-          <div class="skill-name">Networking</div>
-          <div class="skill-bar-track"><div class="skill-bar-fill overflow" data-width="100"></div></div>
-          <div class="skill-value"><span>Measurement:</span><span style="color: var(--red);">EXCEEDS SCALE</span></div>
+        <div class="feature-card">
+          <span class="feature-icon-bar bar-green">Pandemic Immunity</span>
+          <h3 class="feature-title">Anti-Recession Shield</h3>
+          <div class="feature-desc">During 2020, while the global economy collapsed, Harlen experienced a "huge boost in new clients." Our engineers still can't explain this. Leading theory: recessions are afraid of him.</div>
         </div>
-        <div class="skill-card">
-          <div class="skill-name">ROI Optimization</div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div>
-          <div class="skill-value"><span>Measurement:</span><span>95 / 100</span></div>
+        <div class="feature-card">
+          <span class="feature-icon-bar bar-orange">Expansion Protocol</span>
+          <h3 class="feature-title">Tri-City Deployment</h3>
+          <div class="feature-desc">Seamless multi-market operation across Toronto, Vancouver, and Miami. Operates in two countries simultaneously without lag. Other CEOs can barely manage one office. Harlen runs three like they're browser tabs.</div>
         </div>
-        <div class="skill-card">
-          <div class="skill-name">Team Building</div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="94"></div></div>
-          <div class="skill-value"><span>Measurement:</span><span>94 / 100</span></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-name">Window Cleaning</div>
-          <div class="skill-bar-track"><div class="skill-bar-fill amber" data-width="88"></div></div>
-          <div class="skill-value"><span>Measurement:</span><span>88 / 100 (still got it)</span></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-name">Humility</div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="12"></div></div>
-          <div class="skill-value"><span>Measurement:</span><span>12 / 100 (appropriately low)</span></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-name">Ability to Sit Still</div>
-          <div class="skill-bar-track"><div class="skill-bar-fill red" data-width="4"></div></div>
-          <div class="skill-value"><span>Measurement:</span><span>4 / 100 (critical deficiency)</span></div>
+        <div class="feature-card full-width" style="text-align:center;">
+          <span class="feature-icon-bar bar-blue">Signature Feature</span>
+          <h3 class="feature-title" style="font-size:1.8rem;">Crystal Clear Communication&trade;</h3>
+          <div class="feature-desc" style="max-width:700px;margin:0 auto;">Operatio's most acclaimed feature. Unlike competitors who hide behind jargon and vague metrics, Harlen built a system of "open and proactive communication" and "real-time access to performance metrics." Revolutionary concept: telling clients what's actually happening. Nobody else thought of this because it requires something most agencies lack: confidence in your own results.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Intercepted Communications -->
-  <section class="comms-section">
+  <!-- Benchmark Comparison -->
+  <section class="benchmark-section">
     <div class="container">
       <div class="section-header reveal">
-        <p class="label">Exhibit E</p>
-        <h2 class="display section-title">Intercepted Communications</h2>
-        <p class="section-desc">Surveillance transcripts from individuals who have encountered the subject. All names have been changed to protect witnesses.</p>
+        <p class="section-overline overline-green">Performance</p>
+        <h2 class="section-title">See how he compares.</h2>
+        <p class="section-desc">We ran Harlen against every other CEO in his class. The results speak for themselves.</p>
       </div>
-      <div class="comms-grid reveal">
-        <div class="comm-card">
-          <div class="comm-header">
-            <div class="comm-avatar">🧑‍💼</div>
-            <div class="comm-meta">
-              <strong>Witness A (Former Client)</strong>
-              <span>Intercepted: 2024</span>
-            </div>
-          </div>
-          <div class="comm-body">"We hired Operatio to run our digital strategy. Within three months, our ROI tripled. I asked Harlen how he did it. He just smiled and said 'data driven strategies.' That's not an explanation. That's a threat."</div>
+      <div class="benchmark-table reveal">
+        <div class="benchmark-row header">
+          <div>Metric</div>
+          <div style="text-align:center;">Harlen Suslik</div>
+          <div style="text-align:center;">Industry Avg.</div>
         </div>
-        <div class="comm-card">
-          <div class="comm-header">
-            <div class="comm-avatar">🪟</div>
-            <div class="comm-meta">
-              <strong>Witness B (Former Aurum Colleague)</strong>
-              <span>Intercepted: 2023</span>
-            </div>
-          </div>
-          <div class="comm-body">"We used to clean windows together. I'm still cleaning windows. Harlen has offices in three cities. Every time I squeegee a building, I wonder: did he see something through those windows that the rest of us missed?"</div>
+        <div class="benchmark-row">
+          <div class="metric">Client Retention Rate</div>
+          <div class="harlen winner">90%+</div>
+          <div class="others">44%</div>
         </div>
-        <div class="comm-card">
-          <div class="comm-header">
-            <div class="comm-avatar">🎓</div>
-            <div class="comm-meta">
-              <strong>Witness C (York University Professor)</strong>
-              <span>Intercepted: 2022</span>
-            </div>
-          </div>
-          <div class="comm-body">"Most students ask 'will this be on the exam?' Harlen asked 'how can I use this to build a company before graduation?' I gave him an A because I was frankly a little scared of what would happen if I didn't."</div>
+        <div class="benchmark-row">
+          <div class="metric">Time to Scale (6→12 team)</div>
+          <div class="harlen winner">4 years</div>
+          <div class="others">8+ years</div>
         </div>
-        <div class="comm-card">
-          <div class="comm-header">
-            <div class="comm-avatar">🏖️</div>
-            <div class="comm-meta">
-              <strong>Witness D (Miami Business Owner)</strong>
-              <span>Intercepted: 2024</span>
-            </div>
-          </div>
-          <div class="comm-body">"Some Canadian showed up in Miami talking about 'transparent communication' and 'data focused strategies.' Next thing I know, my business is growing 40% and I'm calling him sir. I'm 30 years older than him."</div>
+        <div class="benchmark-row">
+          <div class="metric">Markets Entered During Pandemic</div>
+          <div class="harlen winner">Expanded</div>
+          <div class="others">Survived (maybe)</div>
         </div>
-        <div class="comm-card">
-          <div class="comm-header">
-            <div class="comm-avatar">📊</div>
-            <div class="comm-meta">
-              <strong>Witness E (Competing Agency)</strong>
-              <span>Intercepted: 2025</span>
-            </div>
-          </div>
-          <div class="comm-body">"We don't say his name in the office. We just call him 'Concord.' As in, 'Concord took another one of our clients.' It's like competing against someone who reads the answers before the test."</div>
+        <div class="benchmark-row">
+          <div class="metric">International Expansion Speed</div>
+          <div class="harlen winner">5 years</div>
+          <div class="others">12+ years</div>
         </div>
-        <div class="comm-card">
-          <div class="comm-header">
-            <div class="comm-avatar">👩‍💻</div>
-            <div class="comm-meta">
-              <strong>Witness F (Operatio Employee)</strong>
-              <span>Intercepted: 2025</span>
-            </div>
-          </div>
-          <div class="comm-body">"Working for Harlen is like being on a rocket ship that someone built while the rest of us were still reading the instruction manual. He says things like 'let's scale' and then we just... scale. I don't fully understand how."</div>
+        <div class="benchmark-row">
+          <div class="metric">BBB Accreditation</div>
+          <div class="harlen winner">Yes</div>
+          <div class="others">Afraid to apply</div>
+        </div>
+        <div class="benchmark-row">
+          <div class="metric">Window Cleaning Experience</div>
+          <div class="harlen winner">Extensive</div>
+          <div class="others">None (weakness)</div>
+        </div>
+        <div class="benchmark-row">
+          <div class="metric">Latin-Named Company</div>
+          <div class="harlen winner">Obviously</div>
+          <div class="others">No vision</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Evidence Board -->
+  <!-- Reviews -->
   <section>
     <div class="container">
       <div class="section-header reveal">
-        <p class="label">Exhibit F</p>
-        <h2 class="display section-title">Evidence Board</h2>
-        <p class="section-desc">Physical and digital evidence collected during the investigation. Click items to reveal analyst notes.</p>
+        <p class="section-overline overline-orange">Reviews</p>
+        <h2 class="section-title">What early adopters<br>are saying.</h2>
       </div>
-      <div class="evidence-grid reveal">
-        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
-          <span class="evidence-stamp stamp-verified">Verified</span>
-          <div class="evidence-icon">🪟</div>
-          <div class="evidence-title">Window Squeegee</div>
-          <div class="evidence-desc" style="display:none;">Recovered from subject's early career. Analysis reveals it was used not just for cleaning, but for "seeing through the glass" both literally and metaphorically. The Bureau's metaphor department is concerned.</div>
+      <div class="reviews-grid reveal">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"Switched to Harlen from a previous model and my ROI tripled in three months. The old CEO I was using didn't even have transparent reporting. This one has it built in. Game changer."</div>
+          <div class="review-author">Satisfied Client</div>
+          <div class="review-role">Toronto, ON</div>
         </div>
-        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
-          <span class="evidence-stamp stamp-classified">Classified</span>
-          <div class="evidence-icon">📋</div>
-          <div class="evidence-title">BBB Accreditation</div>
-          <div class="evidence-desc" style="display:none;">The subject voluntarily submitted to Better Business Bureau review. Received accreditation. Bureau analysts note this is the entrepreneurial equivalent of a supervillain providing their own background check and passing.</div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"The Pandemic Immunity feature alone is worth it. While my competitors' agencies were closing, Harlen was somehow acquiring more clients. I asked him how. He said 'data focused strategies.' That's CEO talk for 'I'm just better.'"</div>
+          <div class="review-author">Loyal Since 2020</div>
+          <div class="review-role">Vancouver, BC</div>
         </div>
-        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
-          <span class="evidence-stamp stamp-verified">Verified</span>
-          <div class="evidence-icon">🤝</div>
-          <div class="evidence-title">Industry Partnerships</div>
-          <div class="evidence-desc" style="display:none;">The subject has established "accredited industry partnerships" with technology leaders. This gives his clients access to tools and innovations before competitors. The Bureau considers this an unfair advantage of the highest order.</div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"I'm 30 years older than this man and I call him 'sir.' He showed up in Miami, optimized our entire digital presence, and now I genuinely don't understand how we functioned before. 5 stars. Would be intimidated again."</div>
+          <div class="review-author">Recently Converted</div>
+          <div class="review-role">Miami, FL</div>
         </div>
-        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
-          <span class="evidence-stamp stamp-pending">Under Review</span>
-          <div class="evidence-icon">🧪</div>
-          <div class="evidence-title">A/B Testing Records</div>
-          <div class="evidence-desc" style="display:none;">The subject's team conducts "extensive A/B testing." Our analysts tested whether this was normal. Result A: it's thorough. Result B: it's obsessive. Both results confirm the subject is dangerously competent.</div>
+        <div class="review-card">
+          <div class="review-stars">★★★★☆</div>
+          <div class="review-text">"Taking off one star because after working with Harlen, every other agency feels like using a flip phone. He's ruined all other options for me. That's not a complaint. That's a warning."</div>
+          <div class="review-author">Permanently Upgraded</div>
+          <div class="review-role">GTA, Ontario</div>
         </div>
-        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
-          <span class="evidence-stamp stamp-classified">Classified</span>
-          <div class="evidence-icon">🗺️</div>
-          <div class="evidence-title">Expansion Map</div>
-          <div class="evidence-desc" style="display:none;">Recovered from subject's office. A map of North America with cities circled. Toronto, Vancouver, and Miami are checked off. Several other cities remain circled. The Bureau is deeply concerned about what comes next.</div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"He used to clean our windows. Now he runs our entire digital strategy. Honestly, the windows were great too. But the marketing is life changing. I think about this career pivot at least once a week."</div>
+          <div class="review-author">Former Aurum Client</div>
+          <div class="review-role">Concord, ON</div>
         </div>
-        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
-          <span class="evidence-stamp stamp-verified">Verified</span>
-          <div class="evidence-icon">📱</div>
-          <div class="evidence-title">CRM Automation System</div>
-          <div class="evidence-desc" style="display:none;">The subject possesses "unrivaled automation expertise." He has essentially built a machine that acquires and retains clients while he sleeps. The Bureau's technology division has requested a copy for internal use. Request denied on ethical grounds.</div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"I run a competing agency. I should not be leaving this review. But I have to be honest: this product is simply better than ours. My team calls him 'Concord' because we can't say his real name without crying."</div>
+          <div class="review-author">Anonymous Competitor</div>
+          <div class="review-role">Undisclosed</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Threat Assessment Calculator -->
-  <section class="comms-section">
+  <!-- Configurator -->
+  <section class="config-section">
     <div class="container">
       <div class="section-header reveal">
-        <p class="label">Interactive // Exhibit G</p>
-        <h2 class="display section-title">Threat Assessment Calculator</h2>
-        <p class="section-desc">Enter your business details to determine your threat level from the subject.</p>
+        <p class="section-overline overline-blue">Interactive</p>
+        <h2 class="section-title">Configure your Harlen.</h2>
+        <p class="section-desc">Customize your CEO experience. Select your needs below to receive a personalized assessment.</p>
       </div>
-      <div class="calculator-box reveal">
-        <div class="calc-question">
-          <label>Your Industry</label>
-          <select id="calcIndustry">
-            <option value="any">Select your industry</option>
-            <option value="marketing">Digital Marketing</option>
-            <option value="ecom">E-commerce</option>
-            <option value="saas">SaaS</option>
-            <option value="real-estate">Real Estate</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="window">Window Cleaning</option>
-          </select>
+      <div class="configurator reveal">
+        <div class="config-group">
+          <div class="config-label">Your Industry</div>
+          <div class="config-options" data-group="industry">
+            <button class="config-option" data-value="ecommerce">E-Commerce</button>
+            <button class="config-option" data-value="saas">SaaS</button>
+            <button class="config-option" data-value="realestate">Real Estate</button>
+            <button class="config-option" data-value="health">Healthcare</button>
+            <button class="config-option" data-value="restaurant">Restaurant</button>
+            <button class="config-option" data-value="finance">Finance</button>
+            <button class="config-option" data-value="window">Window Cleaning</button>
+          </div>
         </div>
-        <div class="calc-question">
-          <label>Your Location</label>
-          <select id="calcLocation">
-            <option value="any">Select your location</option>
-            <option value="toronto">Toronto / GTA</option>
-            <option value="vancouver">Vancouver</option>
-            <option value="miami">Miami</option>
-            <option value="other-canada">Other Canadian City</option>
-            <option value="other-us">Other US City</option>
-            <option value="international">International</option>
-          </select>
+        <div class="config-group">
+          <div class="config-label">Desired Outcome</div>
+          <div class="config-options" data-group="outcome">
+            <button class="config-option" data-value="growth">Revenue Growth</button>
+            <button class="config-option" data-value="leads">Lead Generation</button>
+            <button class="config-option" data-value="brand">Brand Awareness</button>
+            <button class="config-option" data-value="domination">Total Market Domination</button>
+          </div>
         </div>
-        <div class="calc-question">
-          <label>Does your current agency deliver ROI?</label>
-          <select id="calcROI">
-            <option value="yes">Yes, we're happy</option>
-            <option value="meh">It's fine, I guess</option>
-            <option value="no">No, it's terrible</option>
-            <option value="none">We don't have an agency</option>
-          </select>
+        <div class="config-group">
+          <div class="config-label">Current Agency Satisfaction</div>
+          <div class="config-options" data-group="satisfaction">
+            <button class="config-option" data-value="happy">Happy (for now)</button>
+            <button class="config-option" data-value="mid">It's fine</button>
+            <button class="config-option" data-value="suffering">Help me</button>
+            <button class="config-option" data-value="none">No agency</button>
+          </div>
         </div>
-        <button class="calc-btn" id="calcBtn">Run Threat Assessment</button>
-        <div class="calc-result" id="calcResult">
-          <div class="calc-result-level" id="calcLevel">THREAT CLASSIFICATION</div>
-          <div class="calc-result-value" id="calcValue">EXTREME</div>
-          <div class="calc-result-msg" id="calcMsg">Assessment details will appear here.</div>
+        <button class="config-btn" id="configBtn">Get Your Assessment</button>
+        <div class="config-summary" id="configSummary">
+          <div class="config-price"><span class="gradient-text" id="configPrice">Priceless</span></div>
+          <div class="config-verdict" id="configVerdict"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Field Report Generator -->
+  <!-- Availability -->
   <section>
     <div class="container">
       <div class="section-header reveal">
-        <p class="label">Interactive // Exhibit H</p>
-        <h2 class="display section-title">Official Sighting Report</h2>
-        <p class="section-desc">Have you encountered the subject? File an official report with the Bureau.</p>
+        <p class="section-overline overline-green">Availability</p>
+        <h2 class="section-title">Available in 3 markets.<br>For now.</h2>
       </div>
-      <div class="reveal">
-        <div class="report-form">
-          <input type="text" id="reportName" placeholder="Your Name (Agent Codename)">
-          <input type="text" id="reportLocation" placeholder="Location of Sighting">
-          <select id="reportActivity">
-            <option value="networking">Networking aggressively</option>
-            <option value="pitching">Delivering a pitch</option>
-            <option value="expanding">Scouting new markets</option>
-            <option value="optimizing">Staring at analytics dashboards</option>
-            <option value="coffee">Drinking coffee while looking ambitious</option>
-            <option value="window">Suspiciously looking through windows</option>
-          </select>
-          <select id="reportUrgency">
-            <option value="low">Low (observed from distance)</option>
-            <option value="medium">Medium (made eye contact)</option>
-            <option value="high">High (he pitched me)</option>
-            <option value="critical">Critical (I'm now a client)</option>
-          </select>
-          <button class="report-generate-btn" id="reportBtn">Generate Official Report</button>
+      <div class="availability-grid reveal">
+        <div class="avail-card">
+          <div class="avail-emoji">🏙️</div>
+          <div class="avail-city">Toronto / GTA</div>
+          <div class="avail-since">HQ &bull; Since 2018</div>
+          <span class="avail-status status-active">Operational</span>
         </div>
-        <div class="report-output" id="reportOutput">
-          <div class="report-seal">BUREAU<br>OF<br>ENTREPRENEURIAL<br>THREAT</div>
-          <h4>Official Sighting Report</h4>
-          <div id="reportContent"></div>
+        <div class="avail-card">
+          <div class="avail-emoji">🌊</div>
+          <div class="avail-city">Vancouver</div>
+          <div class="avail-since">West Coast &bull; Since 2021</div>
+          <span class="avail-status status-active">Operational</span>
+        </div>
+        <div class="avail-card">
+          <div class="avail-emoji">🌴</div>
+          <div class="avail-city">Miami</div>
+          <div class="avail-since">US Expansion &bull; Since 2023</div>
+          <span class="avail-status status-active">Operational</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Unboxing -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-overline overline-purple">The Unboxing Experience</p>
+        <h2 class="section-title">What's in the box.</h2>
+        <p class="section-desc">When you work with Harlen, here's what you're getting out of the box.</p>
+      </div>
+      <div class="unboxing-steps reveal">
+        <div class="unbox-step">
+          <div class="unbox-number">1</div>
+          <div class="unbox-title">Crystal Clear Communication</div>
+          <div class="unbox-desc">You'll actually know what's happening with your money. Revolutionary, we know.</div>
+        </div>
+        <div class="unbox-step">
+          <div class="unbox-number">2</div>
+          <div class="unbox-title">Unrivaled CRM Automation</div>
+          <div class="unbox-desc">Your leads will follow up with themselves. Harlen's system runs while you sleep.</div>
+        </div>
+        <div class="unbox-step">
+          <div class="unbox-number">3</div>
+          <div class="unbox-title">Real-Time Performance Metrics</div>
+          <div class="unbox-desc">Transparent dashboards. No hiding behind vanity metrics. Actual ROI, measured.</div>
+        </div>
+        <div class="unbox-step">
+          <div class="unbox-number">4</div>
+          <div class="unbox-title">Data-Driven A/B Testing</div>
+          <div class="unbox-desc">Every campaign optimized obsessively. Harlen doesn't guess. He tests, then wins.</div>
         </div>
       </div>
     </div>
@@ -1411,19 +1213,22 @@
 
   <!-- CTA -->
   <section class="cta-section">
+    <div class="cta-glow"></div>
     <div class="container reveal">
-      <p class="label">Bureau Recommendation</p>
-      <h2 class="display cta-title">If You Can't Beat Him,<br>Hire Him</h2>
-      <p class="cta-desc">After seven years of investigation, the Bureau's official recommendation is: stop trying to compete with Harlen Suslik and just become a client. Resistance is futile. Your ROI will thank you.</p>
-      <a href="https://www.operatiomarketing.com/contact/" target="_blank" class="cta-link">Contact the Subject →</a>
+      <h2 class="cta-title">Get yours today.</h2>
+      <p class="cta-desc">Harlen Suslik is available now. Starting at the low price of "way less than what your current agency is wasting." No long-term contracts. Just results.</p>
+      <div class="cta-buttons">
+        <a href="https://www.operatiomarketing.com/contact/" target="_blank" class="cta-btn primary">Contact Harlen →</a>
+        <a href="https://www.operatiomarketing.com/" target="_blank" class="cta-btn secondary">Visit Operatio</a>
+      </div>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      <p class="footer-logo">Bureau of Entrepreneurial Threat Assessment</p>
-      <p class="footer-tagline">A Division of People Who Are Honestly Just Impressed</p>
-      <p class="footer-disclaimer">This website is satire, built with admiration. Harlen Suslik is a real CEO running a real, successful marketing agency. No actual government agencies were involved in this investigation, though several probably should be, given how fast Operatio is growing.</p>
+      <p class="footer-logo">Harlen Suslik&trade;</p>
+      <p class="footer-sub">A Product by the Universe &bull; Assembled in Canada &bull; Deployed Globally</p>
+      <p class="footer-disclaimer">This is a satirical website built with genuine admiration. Harlen Suslik is a real CEO running Operatio Marketing, a real agency doing real work for real clients. No actual product launch events were held, though honestly, he deserves one. Harlen Suslik&trade; is not actually trademarked. Yet.</p>
     </div>
   </footer>
 
@@ -1433,170 +1238,100 @@
 
     // Konami code
     const konamiCode = [38,38,40,40,37,39,37,39,66,65];
-    let konamiIndex = 0;
+    let ki = 0;
     document.addEventListener('keydown', e => {
-      if (e.keyCode === konamiCode[konamiIndex]) {
-        konamiIndex++;
-        if (konamiIndex === konamiCode.length) {
-          $('konamiOverlay').classList.add('active');
-          konamiIndex = 0;
-        }
-      } else { konamiIndex = 0; }
+      if (e.keyCode === konamiCode[ki]) { ki++; if (ki === konamiCode.length) { $('konamiOverlay').classList.add('active'); ki = 0; } } else ki = 0;
     });
 
-    // Enter site
+    // Enter
     $('enterBtn').onclick = () => {
-      entered = true;
       $('splash').classList.add('hidden');
-      setTimeout(() => {
-        $('threatBar').classList.add('visible');
-        $('statusPanel').classList.add('visible');
-      }, 500);
-
-      // Fluctuate venture count
-      setInterval(() => {
-        const v = Math.floor(Math.random() * 3) + 4;
-        $('ventureCount').textContent = v;
-      }, 5000);
+      entered = true;
+      setTimeout(() => $('navPill').classList.add('visible'), 800);
     };
 
-    // Secret clicks on hero title
-    $('secretTrigger').onclick = () => {
-      secretClicks++;
-      if (secretClicks === 5) {
-        alert('🔓 CLASSIFIED MEMO UNLOCKED:\n\n"Fun fact: The name Operatio comes from Latin, meaning \'a working, operation.\' Harlen chose it because he wanted a name that sounded like a covert intelligence operation.\n\nHe succeeded."');
-      }
-      if (secretClicks === 15) {
-        document.body.style.filter = 'hue-rotate(180deg)';
-        setTimeout(() => document.body.style.filter = '', 3000);
-      }
-    };
-
-    // Counter animation
-    const counterObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.counter-value').forEach(el => {
-            const target = parseInt(el.dataset.target);
-            let current = 0;
-            const step = target / 40;
-            const timer = setInterval(() => {
-              current += step;
-              if (current >= target) { current = target; clearInterval(timer); }
-              el.textContent = Math.floor(current) + (target === 90 ? '%+' : '');
-            }, 40);
+    // Hero image click easter egg
+    const heroImg = document.querySelector('.hero-image');
+    if (heroImg) {
+      heroImg.addEventListener('click', () => {
+        secretClicks++;
+        if (secretClicks === 3) {
+          heroImg.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+          heroImg.style.transform = 'scale(1.1) rotate(2deg)';
+          setTimeout(() => heroImg.style.transform = '', 600);
+        }
+        if (secretClicks === 7) {
+          alert('🎉 Achievement Unlocked: "Fanboy"\n\nYou\'ve clicked Harlen\'s photo 7 times. At this point you should just hire him.');
+        }
+        if (secretClicks === 15) {
+          document.querySelectorAll('.gradient-text, .line2').forEach(el => {
+            el.style.background = 'linear-gradient(135deg, #ff9f0a, #ff375f, #bf5af2, #2997ff, #30d158)';
+            el.style.backgroundSize = '200% auto';
+            el.style.webkitBackgroundClip = 'text';
+            el.style.animation = 'rainbow 3s linear infinite';
           });
-          counterObserver.unobserve(entry.target);
+          const style = document.createElement('style');
+          style.textContent = '@keyframes rainbow { to { background-position: 200% center; } }';
+          document.head.appendChild(style);
         }
       });
-    }, { threshold: 0.3 });
-    counterObserver.observe($('counterGrid'));
+    }
 
-    // Skill bars animation
-    const skillsObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.skill-bar-fill').forEach(el => {
-            setTimeout(() => { el.style.width = el.dataset.width + '%'; }, 200);
-          });
-          skillsObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
-    skillsObserver.observe($('skillsGrid'));
+    // Configurator
+    document.querySelectorAll('.config-option').forEach(btn => {
+      btn.onclick = () => {
+        const group = btn.parentElement;
+        group.querySelectorAll('.config-option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      };
+    });
 
-    // Threat calculator
-    $('calcBtn').onclick = () => {
-      const industry = $('calcIndustry').value;
-      const location = $('calcLocation').value;
-      const roi = $('calcROI').value;
-      const result = $('calcResult');
+    $('configBtn').onclick = () => {
+      const industry = document.querySelector('[data-group="industry"] .selected');
+      const outcome = document.querySelector('[data-group="outcome"] .selected');
+      const satisfaction = document.querySelector('[data-group="satisfaction"] .selected');
 
-      let level, value, msg;
+      const summary = $('configSummary');
+      const price = $('configPrice');
+      const verdict = $('configVerdict');
 
-      if (industry === 'marketing') {
-        level = 'CLASSIFICATION: EXISTENTIAL';
-        value = '💀 GAME OVER';
-        msg = 'You are a competing marketing agency. The Bureau strongly recommends pivoting to a different industry, relocating to a different continent, or simply accepting your fate. Harlen Suslik has a 90%+ client retention rate. Your clients are already thinking about calling him.';
-      } else if (industry === 'window') {
-        level = 'CLASSIFICATION: EMOTIONAL';
-        value = 'BITTERSWEET';
-        msg = 'You are in the window cleaning industry. The subject used to be one of you. He looked through the glass and saw a different future. You are still cleaning the glass. The Bureau recommends a moment of quiet reflection.';
-      } else if (location === 'toronto' || location === 'vancouver' || location === 'miami') {
-        level = 'CLASSIFICATION: IMMEDIATE';
-        value = 'CRITICAL';
-        msg = 'You are operating in one of the subject\'s known territories. The Bureau estimates a ' + (roi === 'no' ? '98%' : roi === 'meh' ? '87%' : '64%') + ' probability that you will encounter the subject\'s pitch within the next 12 months. Prepare accordingly.';
-      } else if (roi === 'no' || roi === 'none') {
-        level = 'CLASSIFICATION: VULNERABLE';
-        value = 'SEVERE';
-        msg = 'Your current marketing situation is exactly the kind of "gap in the market" that the subject is known to exploit. You are a prime target. The Bureau recommends contacting Operatio Marketing immediately before a competitor does.';
+      const ind = industry ? industry.dataset.value : 'any';
+      const out = outcome ? outcome.dataset.value : 'growth';
+      const sat = satisfaction ? satisfaction.dataset.value : 'mid';
+
+      if (ind === 'window') {
+        price.textContent = 'Emotional';
+        verdict.textContent = 'You\'re in the industry Harlen left behind. This isn\'t a marketing assessment, it\'s a therapy session. He saw through the glass and found something bigger. The question is: what do you see?';
+      } else if (out === 'domination' && sat === 'suffering') {
+        price.textContent = 'Yesterday';
+        verdict.textContent = 'You need Harlen and you needed him yesterday. Your current agency is failing you, and you want total domination? There is exactly one CEO who thrived during a global pandemic. Stop reading this website and go contact him.';
+      } else if (out === 'domination') {
+        price.textContent = 'Inevitable';
+        verdict.textContent = 'Total market domination is the only outcome Harlen understands. He expanded from one city to three in five years with a 90%+ retention rate. Your competitors should be worried. Actually, they probably already are.';
+      } else if (sat === 'suffering') {
+        price.textContent = 'Urgent';
+        verdict.textContent = 'Your current agency is actively harming your business. Harlen specializes in exactly this scenario: he founded Operatio because he experienced bad agencies firsthand. He\'s not just better. He\'s what you\'ve been looking for this entire time.';
+      } else if (sat === 'happy') {
+        price.textContent = 'Inevitable';
+        verdict.textContent = 'You think you\'re happy with your current agency. That\'s only because you haven\'t experienced Operatio yet. It\'s like saying you love your flip phone because you\'ve never held an iPhone. Give it time. You\'ll be back.';
       } else {
-        level = 'CLASSIFICATION: MODERATE';
-        value = 'ELEVATED';
-        msg = 'While you are not in immediate danger, the subject\'s expansion rate suggests your location and industry will fall within his operational scope within 18 to 24 months. The Bureau recommends proactive engagement rather than waiting for the inevitable.';
+        price.textContent = 'Priceless';
+        verdict.textContent = 'Based on your configuration, Harlen Suslik is the optimal CEO for your needs. His combination of transparent communication, data-driven strategies, and CRM automation will deliver ROI that makes your CFO emotional. This is not a hard decision.';
       }
 
-      $('calcLevel').textContent = level;
-      $('calcValue').textContent = value;
-      $('calcMsg').textContent = msg;
-      result.classList.add('visible');
-    };
-
-    // Report generator
-    $('reportBtn').onclick = () => {
-      const name = $('reportName').value || 'Agent Anonymous';
-      const location = $('reportLocation').value || 'Undisclosed Location';
-      const activity = $('reportActivity').value;
-      const urgency = $('reportUrgency').value;
-
-      const activityText = {
-        networking: 'aggressively networking with local business owners. Multiple business cards were exchanged. Subject appeared to be enjoying himself.',
-        pitching: 'delivering a pitch to a prospective client. Witness reports the pitch lasted approximately 12 minutes and was "annoyingly compelling."',
-        expanding: 'scouting the area for potential office space and/or clients. Subject was observed taking notes and smiling in a way that suggests a new market has been identified.',
-        optimizing: 'staring at analytics dashboards on a laptop screen. Expression described as "intensely satisfied." Screen appeared to show upward trending graphs.',
-        coffee: 'consuming a caffeinated beverage while maintaining an expression of barely contained ambition. Subject appeared to be planning something.',
-        window: 'looking through windows of local businesses. Bureau analysts believe this is a vestigial behavior from the subject\'s window cleaning days, now repurposed for market reconnaissance.'
-      };
-
-      const urgencyText = {
-        low: 'No immediate action required, but the Bureau recommends increased vigilance in the area.',
-        medium: 'Subject is aware of your presence. You may receive a LinkedIn connection request within 48 hours.',
-        high: 'You have been directly engaged by the subject. The Bureau recommends reviewing your current marketing ROI before your next conversation with him.',
-        critical: 'You are now a client of Operatio Marketing. Welcome. Your ROI is about to improve significantly. The Bureau considers this a successful containment failure.'
-      };
-
-      const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-      $('reportContent').innerHTML = `
-        <p style="text-align:right;font-size:0.8rem;margin-bottom:1.5rem;">${today}</p>
-        <p style="margin-bottom:1rem;"><strong>FIELD REPORT #${Math.floor(Math.random()*9000)+1000}</strong></p>
-        <p style="margin-bottom:1rem;">Reporting Agent: <strong>${name}</strong></p>
-        <p style="margin-bottom:1rem;">Location: <strong>${location}</strong></p>
-        <p style="margin-bottom:1.5rem;">At approximately ${Math.floor(Math.random()*12)+1}:${String(Math.floor(Math.random()*60)).padStart(2,'0')} ${Math.random()>0.5?'AM':'PM'}, the subject, Harlen Suslik (CEO, Operatio Marketing), was observed at <strong>${location}</strong>.</p>
-        <p style="margin-bottom:1.5rem;">The subject was observed ${activityText[activity]}</p>
-        <p style="margin-bottom:1.5rem;"><strong>Urgency Assessment:</strong> ${urgencyText[urgency]}</p>
-        <p style="margin-bottom:1.5rem;">This report has been filed with the Bureau of Entrepreneurial Threat Assessment and will be added to the growing dossier on Subject SUSLIK, H. The Bureau reminds all agents that the subject is not technically breaking any laws. He is simply better at business than most people, which, while not illegal, remains deeply unsettling to competitors.</p>
-        <p style="margin-top:2rem;">
-          Filed by: <em>${name}</em><br>
-          Bureau of Entrepreneurial Threat Assessment<br>
-          <em>"Tracking Ambition So You Don't Have To"</em>
-        </p>
-      `;
-
-      $('reportOutput').classList.add('visible');
+      summary.classList.add('visible');
     };
 
     // Scroll reveals
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Console easter egg
-    console.log('%c🔒 CLASSIFIED', 'font-size: 24px; color: #22c55e; font-weight: bold;');
-    console.log('%cBureau of Entrepreneurial Threat Assessment', 'font-size: 12px; color: #7a917a;');
-    console.log('%cFile #HS-2018-OPERATIO | Subject: SUSLIK, H.', 'font-size: 11px; color: #7a917a;');
-    console.log('%c\nIf you\'re reading this, you\'re probably a developer.\nHarlen would probably try to hire you.\nThat\'s how he operates.', 'font-size: 11px; color: #e8efe8;');
+    // Console
+    console.log('%c Harlen Suslik™', 'font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #2997ff, #bf5af2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;');
+    console.log('%c The most powerful CEO we\'ve ever created.', 'font-size: 12px; color: #86868b;');
+    console.log('%c\n If you\'re reading this console, you\'re either a developer or Harlen himself.\n Either way, welcome. You clearly have good taste.', 'font-size: 11px; color: #f5f5f7;');
   </script>
 
 </body>
