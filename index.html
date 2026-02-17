@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLASSIFIED: File #HS-2018-SUSLIK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0f0a;
+      --surface: #0f160f;
+      --surface-2: #141e14;
+      --border: rgba(34,197,94,0.12);
+      --text: #e8efe8;
+      --text-dim: #7a917a;
+      --green: #22c55e;
+      --green-soft: rgba(34,197,94,0.08);
+      --green-glow: rgba(34,197,94,0.25);
+      --red: #ef4444;
+      --red-soft: rgba(239,68,68,0.08);
+      --amber: #f59e0b;
+      --amber-soft: rgba(245,158,11,0.08);
+      --gold: #d4a853;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Scanline overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 9997;
+    }
+
+    /* Splash / Classification Screen */
+    .splash {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      transition: opacity 0.6s, visibility 0.6s;
+    }
+
+    .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .splash-icon {
+      width: 100px;
+      height: 100px;
+      border: 3px solid var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      animation: pulse-ring 2s ease-in-out infinite;
+      box-shadow: 0 0 40px var(--green-glow);
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 20px var(--green-glow); }
+      50% { box-shadow: 0 0 60px var(--green-glow), 0 0 100px rgba(34,197,94,0.1); }
+    }
+
+    .splash-classification {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1rem;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--green);
+      display: inline-block;
+    }
+
+    .splash h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .splash h1 span { color: var(--green); }
+
+    .splash p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .enter-btn {
+      padding: 1.1rem 3rem;
+      background: transparent;
+      border: 2px solid var(--green);
+      border-radius: 0;
+      color: var(--green);
+      font-family: 'Special Elite', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .enter-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--green);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+      z-index: 0;
+    }
+
+    .enter-btn:hover::before { transform: translateX(0); }
+    .enter-btn:hover { color: var(--bg); }
+    .enter-btn span { position: relative; z-index: 1; }
+
+    .splash-footer {
+      position: absolute;
+      bottom: 2rem;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      opacity: 0.4;
+      letter-spacing: 0.1em;
+    }
+
+    /* Fixed elements */
+    .threat-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9998;
+      padding: 0.5rem 2rem;
+      background: var(--red);
+      color: white;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.75rem;
+      text-align: center;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: all 0.5s;
+    }
+
+    .threat-bar.visible { opacity: 1; transform: translateY(0); }
+
+    .status-panel {
+      position: fixed;
+      top: 3.5rem;
+      right: 2rem;
+      z-index: 9999;
+      padding: 1rem 1.5rem;
+      background: var(--surface-2);
+      border: 1px solid var(--green);
+      border-radius: 0;
+      opacity: 0;
+      transition: opacity 0.5s;
+      font-family: 'Courier Prime', monospace;
+    }
+
+    .status-panel.visible { opacity: 1; }
+
+    .status-label {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-label::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: blink 1s ease-in-out infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    .status-value { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+    .status-sub { font-size: 0.6rem; color: var(--red); margin-top: 0.25rem; }
+
+    /* Container & Typography */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+    .display { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+    .label {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    .mono { font-family: 'Courier Prime', monospace; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+      filter: blur(100px);
+      opacity: 0.15;
+    }
+
+    .hero-file-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.1s forwards;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 1.5rem;
+      background: var(--red-soft);
+      border: 1px solid rgba(239,68,68,0.3);
+      font-family: 'Special Elite', monospace;
+      font-size: 0.7rem;
+      color: var(--red);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.2s forwards;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 7vw, 5.5rem);
+      max-width: 1000px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.4s forwards;
+    }
+
+    .hero-title .name { color: var(--green); display: block; }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--text-dim);
+      max-width: 700px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.6s forwards;
+    }
+
+    .hero-subtitle .redacted {
+      background: var(--text-dim);
+      color: var(--text-dim);
+      padding: 0 0.3rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      user-select: none;
+    }
+
+    .hero-subtitle .redacted.revealed { background: transparent; color: var(--green); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Sections */
+    section { padding: clamp(5rem, 12vw, 8rem) 0; }
+    .section-header { text-align: center; max-width: 800px; margin: 0 auto 4rem; }
+    .section-title { font-size: clamp(1.8rem, 4.5vw, 3.2rem); margin-top: 1rem; margin-bottom: 1.5rem; }
+    .section-desc { font-size: 1rem; color: var(--text-dim); line-height: 1.8; }
+
+    /* Dossier Section */
+    .dossier-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .dossier-photo {
+      width: 280px;
+      height: 340px;
+      background: var(--surface-2);
+      border: 2px solid var(--green);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .dossier-photo-placeholder {
+      font-size: 5rem;
+      opacity: 0.3;
+    }
+
+    .dossier-photo-stamp {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.6rem;
+      color: var(--red);
+      border: 2px solid var(--red);
+      padding: 0.25rem 0.5rem;
+      transform: rotate(12deg);
+      letter-spacing: 0.15em;
+    }
+
+    .dossier-fields {}
+
+    .dossier-field {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .dossier-field-label {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding-top: 0.1rem;
+    }
+
+    .dossier-field-value { color: var(--text); }
+    .dossier-field-value .highlight { color: var(--green); font-weight: 600; }
+
+    /* Timeline */
+    .timeline { max-width: 800px; margin: 0 auto; position: relative; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--green), var(--green-glow), var(--green));
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .timeline-dot {
+      width: 50px;
+      min-width: 50px;
+      height: 50px;
+      background: var(--surface-2);
+      border: 2px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-content {
+      padding: 1.5rem 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      flex: 1;
+    }
+
+    .timeline-year {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.7rem;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
+
+    .timeline-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.7; }
+
+    .timeline-threat {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .threat-low { background: var(--green-soft); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+    .threat-medium { background: var(--amber-soft); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+    .threat-high { background: var(--red-soft); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+    .threat-critical { background: var(--red); color: white; animation: threat-pulse 1.5s ease-in-out infinite; }
+
+    @keyframes threat-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+    /* Intercepted Comms */
+    .comms-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .comms-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .comm-card {
+      padding: 2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+
+    .comm-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .comm-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--green-soft);
+      border: 1px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .comm-meta { font-size: 0.75rem; }
+    .comm-meta strong { display: block; color: var(--text); font-size: 0.85rem; }
+    .comm-meta span { color: var(--text-dim); }
+
+    .comm-body {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      font-style: italic;
+      padding-left: 1rem;
+      border-left: 2px solid var(--green);
+    }
+
+    /* Threat Assessment Calculator */
+    .calculator-box {
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .calc-question { margin-bottom: 1.5rem; }
+    .calc-question label {
+      display: block;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .calc-question select, .calc-question input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    .calc-question select:focus, .calc-question input:focus { outline: none; border-color: var(--green); }
+
+    .calc-btn {
+      width: 100%;
+      padding: 1.1rem;
+      background: var(--green);
+      border: none;
+      color: var(--bg);
+      font-family: 'Special Elite', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+    }
+
+    .calc-btn:hover { box-shadow: 0 0 30px var(--green-glow); }
+
+    .calc-result {
+      margin-top: 2rem;
+      padding: 2rem;
+      background: var(--bg);
+      border: 2px solid var(--red);
+      text-align: center;
+      display: none;
+    }
+
+    .calc-result.visible { display: block; animation: fadeUp 0.5s ease-out; }
+
+    .calc-result-level {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .calc-result-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .calc-result-msg { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
+
+    /* Skill Levels */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .skill-card {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .skill-name {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-bar-track {
+      height: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: var(--green);
+      width: 0;
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .skill-bar-fill.amber { background: var(--amber); }
+    .skill-bar-fill.red { background: var(--red); }
+    .skill-bar-fill.overflow {
+      background: var(--red);
+      position: relative;
+    }
+
+    .skill-bar-fill.overflow::after {
+      content: 'EXCEEDS SCALE';
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Special Elite', monospace;
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      color: white;
+      white-space: nowrap;
+    }
+
+    .skill-value {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Evidence Board */
+    .evidence-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .evidence-card {
+      padding: 2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    .evidence-card:hover { border-color: var(--green); }
+
+    .evidence-stamp {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.5rem;
+      padding: 0.2rem 0.5rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .stamp-verified { background: var(--green-soft); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+    .stamp-classified { background: var(--red-soft); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+    .stamp-pending { background: var(--amber-soft); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+
+    .evidence-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .evidence-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .evidence-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+
+    /* Report Generator */
+    .report-form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    .report-form input, .report-form select {
+      padding: 0.85rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    .report-form input:focus, .report-form select:focus { outline: none; border-color: var(--green); }
+
+    .report-generate-btn {
+      grid-column: span 2;
+      padding: 1.1rem;
+      background: var(--green);
+      border: none;
+      color: var(--bg);
+      font-family: 'Special Elite', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .report-output {
+      display: none;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: #f5f0e6;
+      color: #1a1a1a;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.85rem;
+      line-height: 1.9;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    .report-output.visible { display: block; animation: fadeUp 0.5s ease-out; }
+
+    .report-seal {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 80px;
+      height: 80px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.5rem;
+      text-align: center;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.3;
+      box-shadow: 0 4px 15px rgba(239,68,68,0.4);
+    }
+
+    .report-output h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* Counter section */
+    .counter-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .counter-card {
+      padding: 2rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .counter-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 0.25rem;
+    }
+
+    .counter-label {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .counter-note {
+      font-size: 0.7rem;
+      color: var(--red);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* Typing effect */
+    .typing-cursor::after {
+      content: '|';
+      animation: cursor-blink 0.8s step-end infinite;
+      color: var(--green);
+    }
+
+    @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 8rem 2rem;
+      background: radial-gradient(ellipse 80% 50% at 50% 100%, var(--green-soft) 0%, transparent 60%), var(--bg);
+    }
+
+    .cta-title { font-size: clamp(1.8rem, 4vw, 3.5rem); margin-bottom: 1.5rem; }
+    .cta-desc { font-size: 1rem; color: var(--text-dim); max-width: 600px; margin: 0 auto 3rem; line-height: 1.8; }
+
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.1rem 2.5rem;
+      text-decoration: none;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: transform 0.3s;
+      background: var(--green);
+      color: var(--bg);
+    }
+
+    .cta-link:hover { transform: translateY(-2px); box-shadow: 0 10px 30px var(--green-glow); }
+
+    /* Footer */
+    footer {
+      padding: 4rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      opacity: 0.4;
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .dossier-grid { grid-template-columns: 1fr; }
+      .dossier-photo { width: 100%; max-width: 280px; margin: 0 auto; }
+      .comms-grid, .skills-grid, .evidence-grid { grid-template-columns: 1fr; }
+      .counter-grid { grid-template-columns: repeat(2, 1fr); }
+      .status-panel { display: none; }
+      .report-form { grid-template-columns: 1fr; }
+      .report-generate-btn { grid-column: span 1; }
+    }
+
+    @media (max-width: 640px) {
+      .counter-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Konami Easter Egg */
+    .konami-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 99999;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+      padding: 2rem;
+    }
+
+    .konami-overlay.active { display: flex; }
+
+    .konami-overlay h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+
+    .konami-overlay p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin-bottom: 2rem; }
+
+    .konami-close {
+      padding: 0.75rem 2rem;
+      background: var(--green);
+      border: none;
+      color: var(--bg);
+      font-family: 'Special Elite', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+    }
+
+    /* Print */
+    @media print {
+      body * { visibility: hidden; }
+      .report-output, .report-output * { visibility: visible; }
+      .report-output { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Splash -->
+  <div class="splash" id="splash">
+    <div class="splash-icon">🔒</div>
+    <div class="splash-classification">Top Secret // Eyes Only</div>
+    <h1>CLASSIFIED FILE: <span>SUSLIK, H.</span></h1>
+    <p>You are about to access a restricted intelligence dossier compiled by the Bureau of Entrepreneurial Threat Assessment. This file contains evidence of dangerously high ambition, unregulated business instincts, and a suspicious trajectory from window cleaning to continental marketing domination.</p>
+    <button class="enter-btn" id="enterBtn"><span>I Accept the Risk</span></button>
+    <p class="splash-footer">BETA // FILE #HS-2018-OPERATIO // CLEARANCE LEVEL: UNLIMITED AMBITION</p>
+  </div>
+
+  <!-- Fixed UI -->
+  <div class="threat-bar" id="threatBar">
+    ⚠ Active Threat Level: MAXIMUM ENTREPRENEURSHIP ⚠ Subject is currently operating across 3 cities ⚠ Containment unlikely
+  </div>
+
+  <div class="status-panel" id="statusPanel">
+    <div class="status-label">Live Venture Count</div>
+    <div class="status-value" id="ventureCount">4</div>
+    <div class="status-sub">↑ INCREASING</div>
+  </div>
+
+  <!-- Konami Easter Egg -->
+  <div class="konami-overlay" id="konamiOverlay">
+    <h2>ACCESS GRANTED</h2>
+    <p>You've unlocked Harlen's actual superpower: he makes everyone around him more successful. That's the real threat. It's contagious.</p>
+    <button class="konami-close" onclick="document.getElementById('konamiOverlay').classList.remove('active')">Acknowledge</button>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-file-number mono">FILE #HS-2018-OPERATIO // OPENED: 2018-03-14 // STATUS: ACTIVE</div>
+    <div class="hero-badge">Bureau of Entrepreneurial Threat Assessment</div>
+    <h1 class="display hero-title" id="secretTrigger">
+      Subject:<br>
+      <span class="name">Harlen Suslik</span>
+    </h1>
+    <p class="hero-subtitle">
+      An ongoing investigation into how one individual went from cleaning windows in the Greater Toronto Area to commanding a digital marketing operation spanning <span class="redacted" onclick="this.classList.toggle('revealed')">three countries</span> in under seven years. The Bureau's conclusion: this level of success <span class="redacted" onclick="this.classList.toggle('revealed')">cannot be explained by conventional ambition</span>.
+    </p>
+  </section>
+
+  <!-- Subject Dossier -->
+  <section class="dossier-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label">Exhibit A</p>
+        <h2 class="display section-title">Subject Dossier</h2>
+      </div>
+      <div class="dossier-grid reveal">
+        <div class="dossier-photo">
+          <div class="dossier-photo-placeholder">📸</div>
+          <div class="dossier-photo-stamp">CLASSIFIED</div>
+        </div>
+        <div class="dossier-fields">
+          <div class="dossier-field">
+            <div class="dossier-field-label">Full Name</div>
+            <div class="dossier-field-value"><span class="highlight">Harlen Suslik</span></div>
+          </div>
+          <div class="dossier-field">
+            <div class="dossier-field-label">Known Alias</div>
+            <div class="dossier-field-value">"The CEO" / "The Operatio Guy"</div>
+          </div>
+          <div class="dossier-field">
+            <div class="dossier-field-label">Primary Base</div>
+            <div class="dossier-field-value">Greater Toronto Area, Ontario, Canada</div>
+          </div>
+          <div class="dossier-field">
+            <div class="dossier-field-label">Secondary Bases</div>
+            <div class="dossier-field-value">Vancouver, BC &bull; Miami, FL</div>
+          </div>
+          <div class="dossier-field">
+            <div class="dossier-field-label">Education</div>
+            <div class="dossier-field-value">BBA, Entrepreneurship &amp; Finance<br>York University (2013&ndash;2017)</div>
+          </div>
+          <div class="dossier-field">
+            <div class="dossier-field-label">Current Cover</div>
+            <div class="dossier-field-value"><span class="highlight">CEO &amp; Founder, Operatio Marketing</span></div>
+          </div>
+          <div class="dossier-field">
+            <div class="dossier-field-label">Threat Level</div>
+            <div class="dossier-field-value" style="color: var(--red); font-weight: 700;">MAXIMUM</div>
+          </div>
+          <div class="dossier-field">
+            <div class="dossier-field-label">Status</div>
+            <div class="dossier-field-value" style="color: var(--amber);">UNCONTAINED</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline of Suspicious Activity -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label">Exhibit B</p>
+        <h2 class="display section-title">Timeline of Suspicious Activity</h2>
+        <p class="section-desc">A chronological record of the subject's escalating pattern of success. Each event represents a further departure from normal entrepreneurial behavior.</p>
+      </div>
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-dot">🎓</div>
+          <div class="timeline-content">
+            <div class="timeline-year">2013 &ndash; 2017</div>
+            <div class="timeline-title">Subject Enrolled at York University</div>
+            <div class="timeline-desc">Studied Entrepreneurship and Finance simultaneously. Bureau analysts note this is the academic equivalent of loading two weapons at once. Fellow students reported the subject "always had a business idea" and "never stopped networking." Surveillance inconclusive but concerning.</div>
+            <span class="timeline-threat threat-low">Threat: Emerging</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">🧹</div>
+          <div class="timeline-content">
+            <div class="timeline-year">Pre-2018</div>
+            <div class="timeline-title">The Window Cleaning Years</div>
+            <div class="timeline-desc">Subject held VP Operations role at Aurum Window Cleaning &amp; Property Care. While ostensibly cleaning windows, the Bureau believes the subject was actually studying the inner workings of every business he could see through the glass. Additional roles at Jaguar Capital Inc. and Maple Leaf Angels suggest the subject was building an entrepreneurial Rolodex of terrifying proportions.</div>
+            <span class="timeline-threat threat-medium">Threat: Escalating</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">🚀</div>
+          <div class="timeline-content">
+            <div class="timeline-year">2018</div>
+            <div class="timeline-title">Operatio Marketing Founded</div>
+            <div class="timeline-desc">The subject identified a "gap in the market." Translation: he saw what every other marketing agency was doing wrong and decided to fix all of it at once. Named the company "Operatio" (Latin for "operation"), because of course he gave his marketing agency a name that sounds like a covert government program.</div>
+            <span class="timeline-threat threat-high">Threat: Significant</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">📈</div>
+          <div class="timeline-content">
+            <div class="timeline-year">2019</div>
+            <div class="timeline-title">Rapid Team Expansion</div>
+            <div class="timeline-desc">Within one year, the subject had recruited 6 operatives. The Bureau notes that most startups are still figuring out their logo at this stage. The subject was already scaling. Client acquisition rates described by one analyst as "frankly suspicious."</div>
+            <span class="timeline-threat threat-high">Threat: High</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">🔥</div>
+          <div class="timeline-content">
+            <div class="timeline-year">2020</div>
+            <div class="timeline-title">Pandemic? What Pandemic?</div>
+            <div class="timeline-desc">While global commerce collapsed, the subject experienced a "huge boost in new clients." Achieved 90%+ client retention year over year. Bureau analysts have no rational explanation for this. Leading theory: the subject simply refused to acknowledge the existence of economic downturns.</div>
+            <span class="timeline-threat threat-high">Threat: Alarming</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">🌊</div>
+          <div class="timeline-content">
+            <div class="timeline-year">2021</div>
+            <div class="timeline-title">Vancouver Expansion (West Coast Infiltrated)</div>
+            <div class="timeline-desc">Not content with dominating Ontario, the subject opened operations in Vancouver. The Bureau intercepted communications suggesting the subject chose Vancouver because "there were still businesses there that hadn't hired him yet." Concerning.</div>
+            <span class="timeline-threat threat-critical">Threat: Critical</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">🌴</div>
+          <div class="timeline-content">
+            <div class="timeline-year">2023</div>
+            <div class="timeline-title">Miami Expansion (International Incident)</div>
+            <div class="timeline-desc">The subject crossed an international border and established operations in Miami, Florida. This represents a full North American expansion. Multiple intelligence agencies are now involved. The subject was reportedly heard saying he wanted to "tap into new markets," which the Bureau considers an understatement of historic proportions.</div>
+            <span class="timeline-threat threat-critical">Threat: MAXIMUM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- By the Numbers -->
+  <section class="evidence-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label">Exhibit C</p>
+        <h2 class="display section-title">By the Numbers</h2>
+        <p class="section-desc">Statistical evidence that the subject's success has exceeded all known parameters for human entrepreneurship.</p>
+      </div>
+      <div class="counter-grid reveal" id="counterGrid">
+        <div class="counter-card">
+          <div class="counter-value" data-target="3">0</div>
+          <div class="counter-label">Cities Infiltrated</div>
+          <div class="counter-note">and counting</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-value" data-target="12">0</div>
+          <div class="counter-label">Operatives Recruited</div>
+          <div class="counter-note">known</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-value" data-target="90">0</div>
+          <div class="counter-label">Client Retention %</div>
+          <div class="counter-note">suspiciously high</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-value" data-target="7">0</div>
+          <div class="counter-label">Years to Domination</div>
+          <div class="counter-note">well under average</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Classified Skill Assessment -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label">Exhibit D</p>
+        <h2 class="display section-title">Classified Skill Assessment</h2>
+        <p class="section-desc">Bureau analysts have attempted to quantify the subject's abilities. Several metrics exceeded the measurement scale.</p>
+      </div>
+      <div class="skills-grid reveal" id="skillsGrid">
+        <div class="skill-card">
+          <div class="skill-name">Client Acquisition</div>
+          <div class="skill-bar-track"><div class="skill-bar-fill overflow" data-width="100"></div></div>
+          <div class="skill-value"><span>Measurement:</span><span style="color: var(--red);">EXCEEDS SCALE</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-name">Strategic Vision</div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="97"></div></div>
+          <div class="skill-value"><span>Measurement:</span><span>97 / 100</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-name">Networking</div>
+          <div class="skill-bar-track"><div class="skill-bar-fill overflow" data-width="100"></div></div>
+          <div class="skill-value"><span>Measurement:</span><span style="color: var(--red);">EXCEEDS SCALE</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-name">ROI Optimization</div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div>
+          <div class="skill-value"><span>Measurement:</span><span>95 / 100</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-name">Team Building</div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="94"></div></div>
+          <div class="skill-value"><span>Measurement:</span><span>94 / 100</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-name">Window Cleaning</div>
+          <div class="skill-bar-track"><div class="skill-bar-fill amber" data-width="88"></div></div>
+          <div class="skill-value"><span>Measurement:</span><span>88 / 100 (still got it)</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-name">Humility</div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="12"></div></div>
+          <div class="skill-value"><span>Measurement:</span><span>12 / 100 (appropriately low)</span></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-name">Ability to Sit Still</div>
+          <div class="skill-bar-track"><div class="skill-bar-fill red" data-width="4"></div></div>
+          <div class="skill-value"><span>Measurement:</span><span>4 / 100 (critical deficiency)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intercepted Communications -->
+  <section class="comms-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label">Exhibit E</p>
+        <h2 class="display section-title">Intercepted Communications</h2>
+        <p class="section-desc">Surveillance transcripts from individuals who have encountered the subject. All names have been changed to protect witnesses.</p>
+      </div>
+      <div class="comms-grid reveal">
+        <div class="comm-card">
+          <div class="comm-header">
+            <div class="comm-avatar">🧑‍💼</div>
+            <div class="comm-meta">
+              <strong>Witness A (Former Client)</strong>
+              <span>Intercepted: 2024</span>
+            </div>
+          </div>
+          <div class="comm-body">"We hired Operatio to run our digital strategy. Within three months, our ROI tripled. I asked Harlen how he did it. He just smiled and said 'data driven strategies.' That's not an explanation. That's a threat."</div>
+        </div>
+        <div class="comm-card">
+          <div class="comm-header">
+            <div class="comm-avatar">🪟</div>
+            <div class="comm-meta">
+              <strong>Witness B (Former Aurum Colleague)</strong>
+              <span>Intercepted: 2023</span>
+            </div>
+          </div>
+          <div class="comm-body">"We used to clean windows together. I'm still cleaning windows. Harlen has offices in three cities. Every time I squeegee a building, I wonder: did he see something through those windows that the rest of us missed?"</div>
+        </div>
+        <div class="comm-card">
+          <div class="comm-header">
+            <div class="comm-avatar">🎓</div>
+            <div class="comm-meta">
+              <strong>Witness C (York University Professor)</strong>
+              <span>Intercepted: 2022</span>
+            </div>
+          </div>
+          <div class="comm-body">"Most students ask 'will this be on the exam?' Harlen asked 'how can I use this to build a company before graduation?' I gave him an A because I was frankly a little scared of what would happen if I didn't."</div>
+        </div>
+        <div class="comm-card">
+          <div class="comm-header">
+            <div class="comm-avatar">🏖️</div>
+            <div class="comm-meta">
+              <strong>Witness D (Miami Business Owner)</strong>
+              <span>Intercepted: 2024</span>
+            </div>
+          </div>
+          <div class="comm-body">"Some Canadian showed up in Miami talking about 'transparent communication' and 'data focused strategies.' Next thing I know, my business is growing 40% and I'm calling him sir. I'm 30 years older than him."</div>
+        </div>
+        <div class="comm-card">
+          <div class="comm-header">
+            <div class="comm-avatar">📊</div>
+            <div class="comm-meta">
+              <strong>Witness E (Competing Agency)</strong>
+              <span>Intercepted: 2025</span>
+            </div>
+          </div>
+          <div class="comm-body">"We don't say his name in the office. We just call him 'Concord.' As in, 'Concord took another one of our clients.' It's like competing against someone who reads the answers before the test."</div>
+        </div>
+        <div class="comm-card">
+          <div class="comm-header">
+            <div class="comm-avatar">👩‍💻</div>
+            <div class="comm-meta">
+              <strong>Witness F (Operatio Employee)</strong>
+              <span>Intercepted: 2025</span>
+            </div>
+          </div>
+          <div class="comm-body">"Working for Harlen is like being on a rocket ship that someone built while the rest of us were still reading the instruction manual. He says things like 'let's scale' and then we just... scale. I don't fully understand how."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Evidence Board -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label">Exhibit F</p>
+        <h2 class="display section-title">Evidence Board</h2>
+        <p class="section-desc">Physical and digital evidence collected during the investigation. Click items to reveal analyst notes.</p>
+      </div>
+      <div class="evidence-grid reveal">
+        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
+          <span class="evidence-stamp stamp-verified">Verified</span>
+          <div class="evidence-icon">🪟</div>
+          <div class="evidence-title">Window Squeegee</div>
+          <div class="evidence-desc" style="display:none;">Recovered from subject's early career. Analysis reveals it was used not just for cleaning, but for "seeing through the glass" both literally and metaphorically. The Bureau's metaphor department is concerned.</div>
+        </div>
+        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
+          <span class="evidence-stamp stamp-classified">Classified</span>
+          <div class="evidence-icon">📋</div>
+          <div class="evidence-title">BBB Accreditation</div>
+          <div class="evidence-desc" style="display:none;">The subject voluntarily submitted to Better Business Bureau review. Received accreditation. Bureau analysts note this is the entrepreneurial equivalent of a supervillain providing their own background check and passing.</div>
+        </div>
+        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
+          <span class="evidence-stamp stamp-verified">Verified</span>
+          <div class="evidence-icon">🤝</div>
+          <div class="evidence-title">Industry Partnerships</div>
+          <div class="evidence-desc" style="display:none;">The subject has established "accredited industry partnerships" with technology leaders. This gives his clients access to tools and innovations before competitors. The Bureau considers this an unfair advantage of the highest order.</div>
+        </div>
+        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
+          <span class="evidence-stamp stamp-pending">Under Review</span>
+          <div class="evidence-icon">🧪</div>
+          <div class="evidence-title">A/B Testing Records</div>
+          <div class="evidence-desc" style="display:none;">The subject's team conducts "extensive A/B testing." Our analysts tested whether this was normal. Result A: it's thorough. Result B: it's obsessive. Both results confirm the subject is dangerously competent.</div>
+        </div>
+        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
+          <span class="evidence-stamp stamp-classified">Classified</span>
+          <div class="evidence-icon">🗺️</div>
+          <div class="evidence-title">Expansion Map</div>
+          <div class="evidence-desc" style="display:none;">Recovered from subject's office. A map of North America with cities circled. Toronto, Vancouver, and Miami are checked off. Several other cities remain circled. The Bureau is deeply concerned about what comes next.</div>
+        </div>
+        <div class="evidence-card" onclick="this.querySelector('.evidence-desc').style.display = this.querySelector('.evidence-desc').style.display === 'block' ? 'none' : 'block'">
+          <span class="evidence-stamp stamp-verified">Verified</span>
+          <div class="evidence-icon">📱</div>
+          <div class="evidence-title">CRM Automation System</div>
+          <div class="evidence-desc" style="display:none;">The subject possesses "unrivaled automation expertise." He has essentially built a machine that acquires and retains clients while he sleeps. The Bureau's technology division has requested a copy for internal use. Request denied on ethical grounds.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Threat Assessment Calculator -->
+  <section class="comms-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label">Interactive // Exhibit G</p>
+        <h2 class="display section-title">Threat Assessment Calculator</h2>
+        <p class="section-desc">Enter your business details to determine your threat level from the subject.</p>
+      </div>
+      <div class="calculator-box reveal">
+        <div class="calc-question">
+          <label>Your Industry</label>
+          <select id="calcIndustry">
+            <option value="any">Select your industry</option>
+            <option value="marketing">Digital Marketing</option>
+            <option value="ecom">E-commerce</option>
+            <option value="saas">SaaS</option>
+            <option value="real-estate">Real Estate</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="window">Window Cleaning</option>
+          </select>
+        </div>
+        <div class="calc-question">
+          <label>Your Location</label>
+          <select id="calcLocation">
+            <option value="any">Select your location</option>
+            <option value="toronto">Toronto / GTA</option>
+            <option value="vancouver">Vancouver</option>
+            <option value="miami">Miami</option>
+            <option value="other-canada">Other Canadian City</option>
+            <option value="other-us">Other US City</option>
+            <option value="international">International</option>
+          </select>
+        </div>
+        <div class="calc-question">
+          <label>Does your current agency deliver ROI?</label>
+          <select id="calcROI">
+            <option value="yes">Yes, we're happy</option>
+            <option value="meh">It's fine, I guess</option>
+            <option value="no">No, it's terrible</option>
+            <option value="none">We don't have an agency</option>
+          </select>
+        </div>
+        <button class="calc-btn" id="calcBtn">Run Threat Assessment</button>
+        <div class="calc-result" id="calcResult">
+          <div class="calc-result-level" id="calcLevel">THREAT CLASSIFICATION</div>
+          <div class="calc-result-value" id="calcValue">EXTREME</div>
+          <div class="calc-result-msg" id="calcMsg">Assessment details will appear here.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Field Report Generator -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label">Interactive // Exhibit H</p>
+        <h2 class="display section-title">Official Sighting Report</h2>
+        <p class="section-desc">Have you encountered the subject? File an official report with the Bureau.</p>
+      </div>
+      <div class="reveal">
+        <div class="report-form">
+          <input type="text" id="reportName" placeholder="Your Name (Agent Codename)">
+          <input type="text" id="reportLocation" placeholder="Location of Sighting">
+          <select id="reportActivity">
+            <option value="networking">Networking aggressively</option>
+            <option value="pitching">Delivering a pitch</option>
+            <option value="expanding">Scouting new markets</option>
+            <option value="optimizing">Staring at analytics dashboards</option>
+            <option value="coffee">Drinking coffee while looking ambitious</option>
+            <option value="window">Suspiciously looking through windows</option>
+          </select>
+          <select id="reportUrgency">
+            <option value="low">Low (observed from distance)</option>
+            <option value="medium">Medium (made eye contact)</option>
+            <option value="high">High (he pitched me)</option>
+            <option value="critical">Critical (I'm now a client)</option>
+          </select>
+          <button class="report-generate-btn" id="reportBtn">Generate Official Report</button>
+        </div>
+        <div class="report-output" id="reportOutput">
+          <div class="report-seal">BUREAU<br>OF<br>ENTREPRENEURIAL<br>THREAT</div>
+          <h4>Official Sighting Report</h4>
+          <div id="reportContent"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container reveal">
+      <p class="label">Bureau Recommendation</p>
+      <h2 class="display cta-title">If You Can't Beat Him,<br>Hire Him</h2>
+      <p class="cta-desc">After seven years of investigation, the Bureau's official recommendation is: stop trying to compete with Harlen Suslik and just become a client. Resistance is futile. Your ROI will thank you.</p>
+      <a href="https://www.operatiomarketing.com/contact/" target="_blank" class="cta-link">Contact the Subject →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p class="footer-logo">Bureau of Entrepreneurial Threat Assessment</p>
+      <p class="footer-tagline">A Division of People Who Are Honestly Just Impressed</p>
+      <p class="footer-disclaimer">This website is satire, built with admiration. Harlen Suslik is a real CEO running a real, successful marketing agency. No actual government agencies were involved in this investigation, though several probably should be, given how fast Operatio is growing.</p>
+    </div>
+  </footer>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    let entered = false, secretClicks = 0;
+
+    // Konami code
+    const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+    let konamiIndex = 0;
+    document.addEventListener('keydown', e => {
+      if (e.keyCode === konamiCode[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+          $('konamiOverlay').classList.add('active');
+          konamiIndex = 0;
+        }
+      } else { konamiIndex = 0; }
+    });
+
+    // Enter site
+    $('enterBtn').onclick = () => {
+      entered = true;
+      $('splash').classList.add('hidden');
+      setTimeout(() => {
+        $('threatBar').classList.add('visible');
+        $('statusPanel').classList.add('visible');
+      }, 500);
+
+      // Fluctuate venture count
+      setInterval(() => {
+        const v = Math.floor(Math.random() * 3) + 4;
+        $('ventureCount').textContent = v;
+      }, 5000);
+    };
+
+    // Secret clicks on hero title
+    $('secretTrigger').onclick = () => {
+      secretClicks++;
+      if (secretClicks === 5) {
+        alert('🔓 CLASSIFIED MEMO UNLOCKED:\n\n"Fun fact: The name Operatio comes from Latin, meaning \'a working, operation.\' Harlen chose it because he wanted a name that sounded like a covert intelligence operation.\n\nHe succeeded."');
+      }
+      if (secretClicks === 15) {
+        document.body.style.filter = 'hue-rotate(180deg)';
+        setTimeout(() => document.body.style.filter = '', 3000);
+      }
+    };
+
+    // Counter animation
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.counter-value').forEach(el => {
+            const target = parseInt(el.dataset.target);
+            let current = 0;
+            const step = target / 40;
+            const timer = setInterval(() => {
+              current += step;
+              if (current >= target) { current = target; clearInterval(timer); }
+              el.textContent = Math.floor(current) + (target === 90 ? '%+' : '');
+            }, 40);
+          });
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    counterObserver.observe($('counterGrid'));
+
+    // Skill bars animation
+    const skillsObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.skill-bar-fill').forEach(el => {
+            setTimeout(() => { el.style.width = el.dataset.width + '%'; }, 200);
+          });
+          skillsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    skillsObserver.observe($('skillsGrid'));
+
+    // Threat calculator
+    $('calcBtn').onclick = () => {
+      const industry = $('calcIndustry').value;
+      const location = $('calcLocation').value;
+      const roi = $('calcROI').value;
+      const result = $('calcResult');
+
+      let level, value, msg;
+
+      if (industry === 'marketing') {
+        level = 'CLASSIFICATION: EXISTENTIAL';
+        value = '💀 GAME OVER';
+        msg = 'You are a competing marketing agency. The Bureau strongly recommends pivoting to a different industry, relocating to a different continent, or simply accepting your fate. Harlen Suslik has a 90%+ client retention rate. Your clients are already thinking about calling him.';
+      } else if (industry === 'window') {
+        level = 'CLASSIFICATION: EMOTIONAL';
+        value = 'BITTERSWEET';
+        msg = 'You are in the window cleaning industry. The subject used to be one of you. He looked through the glass and saw a different future. You are still cleaning the glass. The Bureau recommends a moment of quiet reflection.';
+      } else if (location === 'toronto' || location === 'vancouver' || location === 'miami') {
+        level = 'CLASSIFICATION: IMMEDIATE';
+        value = 'CRITICAL';
+        msg = 'You are operating in one of the subject\'s known territories. The Bureau estimates a ' + (roi === 'no' ? '98%' : roi === 'meh' ? '87%' : '64%') + ' probability that you will encounter the subject\'s pitch within the next 12 months. Prepare accordingly.';
+      } else if (roi === 'no' || roi === 'none') {
+        level = 'CLASSIFICATION: VULNERABLE';
+        value = 'SEVERE';
+        msg = 'Your current marketing situation is exactly the kind of "gap in the market" that the subject is known to exploit. You are a prime target. The Bureau recommends contacting Operatio Marketing immediately before a competitor does.';
+      } else {
+        level = 'CLASSIFICATION: MODERATE';
+        value = 'ELEVATED';
+        msg = 'While you are not in immediate danger, the subject\'s expansion rate suggests your location and industry will fall within his operational scope within 18 to 24 months. The Bureau recommends proactive engagement rather than waiting for the inevitable.';
+      }
+
+      $('calcLevel').textContent = level;
+      $('calcValue').textContent = value;
+      $('calcMsg').textContent = msg;
+      result.classList.add('visible');
+    };
+
+    // Report generator
+    $('reportBtn').onclick = () => {
+      const name = $('reportName').value || 'Agent Anonymous';
+      const location = $('reportLocation').value || 'Undisclosed Location';
+      const activity = $('reportActivity').value;
+      const urgency = $('reportUrgency').value;
+
+      const activityText = {
+        networking: 'aggressively networking with local business owners. Multiple business cards were exchanged. Subject appeared to be enjoying himself.',
+        pitching: 'delivering a pitch to a prospective client. Witness reports the pitch lasted approximately 12 minutes and was "annoyingly compelling."',
+        expanding: 'scouting the area for potential office space and/or clients. Subject was observed taking notes and smiling in a way that suggests a new market has been identified.',
+        optimizing: 'staring at analytics dashboards on a laptop screen. Expression described as "intensely satisfied." Screen appeared to show upward trending graphs.',
+        coffee: 'consuming a caffeinated beverage while maintaining an expression of barely contained ambition. Subject appeared to be planning something.',
+        window: 'looking through windows of local businesses. Bureau analysts believe this is a vestigial behavior from the subject\'s window cleaning days, now repurposed for market reconnaissance.'
+      };
+
+      const urgencyText = {
+        low: 'No immediate action required, but the Bureau recommends increased vigilance in the area.',
+        medium: 'Subject is aware of your presence. You may receive a LinkedIn connection request within 48 hours.',
+        high: 'You have been directly engaged by the subject. The Bureau recommends reviewing your current marketing ROI before your next conversation with him.',
+        critical: 'You are now a client of Operatio Marketing. Welcome. Your ROI is about to improve significantly. The Bureau considers this a successful containment failure.'
+      };
+
+      const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+      $('reportContent').innerHTML = `
+        <p style="text-align:right;font-size:0.8rem;margin-bottom:1.5rem;">${today}</p>
+        <p style="margin-bottom:1rem;"><strong>FIELD REPORT #${Math.floor(Math.random()*9000)+1000}</strong></p>
+        <p style="margin-bottom:1rem;">Reporting Agent: <strong>${name}</strong></p>
+        <p style="margin-bottom:1rem;">Location: <strong>${location}</strong></p>
+        <p style="margin-bottom:1.5rem;">At approximately ${Math.floor(Math.random()*12)+1}:${String(Math.floor(Math.random()*60)).padStart(2,'0')} ${Math.random()>0.5?'AM':'PM'}, the subject, Harlen Suslik (CEO, Operatio Marketing), was observed at <strong>${location}</strong>.</p>
+        <p style="margin-bottom:1.5rem;">The subject was observed ${activityText[activity]}</p>
+        <p style="margin-bottom:1.5rem;"><strong>Urgency Assessment:</strong> ${urgencyText[urgency]}</p>
+        <p style="margin-bottom:1.5rem;">This report has been filed with the Bureau of Entrepreneurial Threat Assessment and will be added to the growing dossier on Subject SUSLIK, H. The Bureau reminds all agents that the subject is not technically breaking any laws. He is simply better at business than most people, which, while not illegal, remains deeply unsettling to competitors.</p>
+        <p style="margin-top:2rem;">
+          Filed by: <em>${name}</em><br>
+          Bureau of Entrepreneurial Threat Assessment<br>
+          <em>"Tracking Ambition So You Don't Have To"</em>
+        </p>
+      `;
+
+      $('reportOutput').classList.add('visible');
+    };
+
+    // Scroll reveals
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Console easter egg
+    console.log('%c🔒 CLASSIFIED', 'font-size: 24px; color: #22c55e; font-weight: bold;');
+    console.log('%cBureau of Entrepreneurial Threat Assessment', 'font-size: 12px; color: #7a917a;');
+    console.log('%cFile #HS-2018-OPERATIO | Subject: SUSLIK, H.', 'font-size: 11px; color: #7a917a;');
+    console.log('%c\nIf you\'re reading this, you\'re probably a developer.\nHarlen would probably try to hire you.\nThat\'s how he operates.', 'font-size: 11px; color: #e8efe8;');
+  </script>
+
+</body>
+</html>
