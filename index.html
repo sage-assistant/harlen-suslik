@@ -6,7 +6,7 @@
   <title>Introducing Harlen Suslik</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #000000;
@@ -40,7 +40,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Splash - Keynote intro */
+    /* Splash */
     .splash {
       position: fixed;
       inset: 0;
@@ -54,211 +54,133 @@
       padding: 2rem;
       transition: opacity 0.8s ease, visibility 0.8s;
     }
-
     .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
     .splash-logo {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeIn 1s ease-out 0.2s forwards;
+      width: 80px; height: 80px; margin-bottom: 2rem;
+      opacity: 0; animation: fadeIn 1s ease-out 0.2s forwards;
     }
-
     .splash-logo svg { width: 100%; height: 100%; }
 
     .splash-event {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 0.75rem;
-      opacity: 0;
-      animation: fadeIn 1s ease-out 0.4s forwards;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.75rem;
+      opacity: 0; animation: fadeIn 1s ease-out 0.4s forwards;
     }
 
     .splash h1 {
-      font-size: clamp(2.5rem, 7vw, 5rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 0.5rem;
-      opacity: 0;
-      animation: fadeIn 1s ease-out 0.6s forwards;
+      font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 800;
+      letter-spacing: -0.04em; margin-bottom: 0.5rem;
+      opacity: 0; animation: fadeIn 1s ease-out 0.6s forwards;
     }
 
-    .splash h1 .gradient-text {
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .splash .sub {
+      font-size: 1.2rem; color: var(--text-dim); font-weight: 300;
+      margin-bottom: 1rem; max-width: 500px;
+      opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards;
     }
 
-    .splash p {
-      font-size: 1.2rem;
-      color: var(--text-dim);
-      font-weight: 300;
+    .splash .sub2 {
+      font-size: 0.85rem; color: var(--red); font-weight: 500;
       margin-bottom: 3rem;
-      opacity: 0;
-      animation: fadeIn 1s ease-out 0.8s forwards;
+      opacity: 0; animation: fadeIn 1s ease-out 0.9s forwards;
+    }
+
+    .gradient-text {
+      background: var(--gradient-1);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
 
     .splash-btn {
-      padding: 1rem 2.5rem;
-      background: var(--blue);
-      border: none;
-      border-radius: 980px;
-      color: white;
-      font-family: inherit;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
+      padding: 1rem 2.5rem; background: var(--blue); border: none;
+      border-radius: 980px; color: white; font-family: inherit;
+      font-size: 1rem; font-weight: 600; cursor: pointer;
       transition: all 0.3s;
-      opacity: 0;
-      animation: fadeIn 1s ease-out 1s forwards;
+      opacity: 0; animation: fadeIn 1s ease-out 1s forwards;
     }
-
     .splash-btn:hover { background: #0077ed; transform: scale(1.02); }
 
     .splash-date {
-      position: absolute;
-      bottom: 2.5rem;
-      font-size: 0.7rem;
+      position: absolute; bottom: 2.5rem; font-size: 0.7rem;
       color: var(--text-dim);
-      opacity: 0;
-      animation: fadeIn 1s ease-out 1.2s forwards;
+      opacity: 0; animation: fadeIn 1s ease-out 1.2s forwards;
     }
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Navigation pill */
+    /* Nav pill */
     .nav-pill {
-      position: fixed;
-      top: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 9999;
-      padding: 0.5rem 1.5rem;
-      background: rgba(29,29,31,0.72);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      border-radius: 980px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--text-dim);
-      letter-spacing: 0.05em;
-      opacity: 0;
-      transition: opacity 0.5s;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 9999; padding: 0.5rem 1.5rem;
+      background: rgba(29,29,31,0.72); backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border);
+      border-radius: 980px; font-size: 0.75rem; font-weight: 500;
+      color: var(--text-dim); letter-spacing: 0.05em;
+      opacity: 0; transition: opacity 0.5s;
+      display: flex; align-items: center; gap: 0.75rem;
     }
-
     .nav-pill.visible { opacity: 1; }
-    .nav-pill .dot { width: 6px; height: 6px; background: var(--blue); border-radius: 50%; }
+    .nav-pill .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
 
-    /* Container */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); }
 
     /* Hero */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 6rem 2rem 4rem; position: relative; overflow: hidden;
     }
 
     .hero-glow {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 800px;
+      position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px;
       background: radial-gradient(circle, var(--blue-glow) 0%, rgba(191,90,242,0.08) 40%, transparent 70%);
-      filter: blur(80px);
-      opacity: 0.4;
-      pointer-events: none;
+      filter: blur(80px); opacity: 0.4; pointer-events: none;
     }
 
     .hero-overline {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: heroFade 1s ease-out 0.1s forwards;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 1.5rem;
+      opacity: 0; animation: heroFade 1s ease-out 0.1s forwards;
     }
 
     .hero-title {
-      font-size: clamp(3rem, 10vw, 7rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1.0;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: heroFade 1s ease-out 0.3s forwards;
+      font-size: clamp(3rem, 10vw, 7rem); font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1.0; margin-bottom: 1.5rem;
+      opacity: 0; animation: heroFade 1s ease-out 0.3s forwards;
     }
-
     .hero-title .line2 {
       background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
 
     .hero-tagline {
-      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-      font-weight: 300;
-      color: var(--text-dim);
-      max-width: 650px;
-      line-height: 1.6;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem); font-weight: 300;
+      color: var(--text-dim); max-width: 700px; line-height: 1.6;
       margin-bottom: 3rem;
-      opacity: 0;
-      animation: heroFade 1s ease-out 0.5s forwards;
+      opacity: 0; animation: heroFade 1s ease-out 0.5s forwards;
     }
 
     .hero-image {
-      width: clamp(200px, 30vw, 320px);
-      height: clamp(240px, 36vw, 390px);
-      border-radius: 24px;
-      overflow: hidden;
-      position: relative;
-      opacity: 0;
-      animation: heroFade 1s ease-out 0.7s forwards;
+      width: clamp(200px, 30vw, 320px); height: clamp(240px, 36vw, 390px);
+      border-radius: 24px; overflow: hidden; position: relative;
+      opacity: 0; animation: heroFade 1s ease-out 0.7s forwards;
       box-shadow: 0 30px 80px rgba(41,151,255,0.15), 0 0 0 1px rgba(255,255,255,0.05);
     }
 
     .hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%) contrast(1.1);
-      transition: filter 0.5s;
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(100%) contrast(1.1); transition: filter 0.5s;
     }
-
     .hero-image:hover img { filter: grayscale(0%); }
 
     .hero-image-label {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      position: absolute; bottom: 0; left: 0; right: 0;
       padding: 2rem 1.5rem 1.25rem;
       background: linear-gradient(transparent, rgba(0,0,0,0.85));
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--blue);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--blue);
     }
 
     @keyframes heroFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -266,522 +188,228 @@
     /* Section styles */
     section { padding: clamp(6rem, 15vw, 10rem) 0; }
     .section-header { text-align: center; max-width: 800px; margin: 0 auto 5rem; }
-
-    .section-overline {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
+    .section-overline { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
     .overline-blue { color: var(--blue); }
     .overline-purple { color: var(--purple); }
     .overline-green { color: var(--green); }
     .overline-orange { color: var(--orange); }
+    .overline-red { color: var(--red); }
+    .section-title { font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1.5rem; }
+    .section-desc { font-size: 1.1rem; font-weight: 300; color: var(--text-dim); line-height: 1.7; }
 
-    .section-title {
-      font-size: clamp(2.2rem, 5.5vw, 4rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
+    /* Warning banner */
+    .warning-banner {
+      padding: 1rem 2rem; background: rgba(255,69,58,0.06);
+      border-top: 1px solid rgba(255,69,58,0.15);
+      border-bottom: 1px solid rgba(255,69,58,0.15);
+      text-align: center; font-size: 0.8rem; color: var(--red);
+      font-weight: 500; letter-spacing: 0.05em;
     }
 
-    .section-desc {
-      font-size: 1.1rem;
-      font-weight: 300;
-      color: var(--text-dim);
-      line-height: 1.7;
-    }
+    /* Product specs */
+    .specs-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
-    /* Product specs section */
-    .specs-section {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .specs-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-    }
+    .specs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
 
     .spec-card {
-      padding: 3rem 2.5rem;
-      text-align: center;
+      padding: 2.5rem 2rem; text-align: center;
       border-right: 1px solid var(--border);
-      position: relative;
     }
-
     .spec-card:last-child { border-right: none; }
 
-    .spec-icon {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      display: block;
-    }
-
     .spec-value {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.25rem;
-      line-height: 1;
+      font-size: 2.8rem; font-weight: 800; letter-spacing: -0.03em;
+      margin-bottom: 0.25rem; line-height: 1;
     }
 
-    .spec-value .gradient-text {
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .spec-label {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      font-weight: 400;
-      margin-bottom: 0.5rem;
-    }
-
-    .spec-note {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      opacity: 0.6;
-      margin-top: 0.5rem;
-    }
+    .spec-label { font-size: 0.8rem; color: var(--text-dim); font-weight: 400; margin-bottom: 0.25rem; }
+    .spec-note { font-size: 0.65rem; color: var(--red); font-weight: 500; margin-top: 0.5rem; }
 
     /* Feature cards */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 
     .feature-card {
-      padding: 3rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      position: relative;
-      overflow: hidden;
+      padding: 3rem; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 24px; position: relative; overflow: hidden;
       transition: border-color 0.3s;
     }
-
     .feature-card:hover { border-color: rgba(255,255,255,0.15); }
-
     .feature-card.full-width { grid-column: span 2; }
 
     .feature-icon-bar {
-      display: inline-flex;
-      padding: 0.5rem 1rem;
-      border-radius: 980px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
+      display: inline-flex; padding: 0.5rem 1rem; border-radius: 980px;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 1.5rem;
     }
-
     .bar-blue { background: var(--blue-soft); color: var(--blue); }
     .bar-purple { background: rgba(191,90,242,0.08); color: var(--purple); }
     .bar-green { background: rgba(48,209,88,0.08); color: var(--green); }
     .bar-orange { background: rgba(255,159,10,0.08); color: var(--orange); }
+    .bar-red { background: rgba(255,69,58,0.08); color: var(--red); }
 
-    .feature-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-    }
+    .feature-title { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .feature-desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; font-weight: 300; }
 
-    .feature-desc {
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    /* Benchmark comparison */
+    /* Benchmark */
     .benchmark-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
-    .benchmark-table {
-      max-width: 800px;
-      margin: 0 auto;
-      width: 100%;
-    }
+    .benchmark-table { max-width: 850px; margin: 0 auto; width: 100%; }
 
     .benchmark-row {
-      display: grid;
-      grid-template-columns: 1fr 140px 140px;
-      gap: 1rem;
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr 160px 160px;
+      gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border);
       align-items: center;
     }
-
     .benchmark-row.header {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      padding-bottom: 1rem;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-dim); padding-bottom: 1rem;
     }
-
     .benchmark-row .metric { font-size: 0.9rem; font-weight: 500; }
+    .benchmark-row .harlen { text-align: center; font-weight: 700; color: var(--blue); font-size: 0.95rem; }
+    .benchmark-row .others { text-align: center; color: var(--text-dim); font-size: 0.9rem; }
 
-    .benchmark-row .harlen {
-      text-align: center;
-      font-weight: 700;
-      color: var(--blue);
-      font-size: 0.95rem;
-    }
-
-    .benchmark-row .others {
-      text-align: center;
-      color: var(--text-dim);
-      font-size: 0.9rem;
-    }
-
-    .benchmark-row .winner { position: relative; }
-    .benchmark-row .winner::after {
-      content: '✓';
-      margin-left: 0.35rem;
-      font-size: 0.7rem;
-    }
-
-    /* Timeline (product evolution) */
-    .evolution-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
+    /* Evolution */
+    .evolution-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
 
     .evo-card {
-      padding: 2rem 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      text-align: center;
-      position: relative;
-      transition: transform 0.3s, border-color 0.3s;
+      padding: 2rem 1.5rem; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; text-align: center; transition: transform 0.3s, border-color 0.3s;
     }
-
     .evo-card:hover { transform: translateY(-4px); border-color: var(--blue); }
 
     .evo-version {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 0.75rem;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 0.75rem;
     }
-
-    .evo-year {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.5rem;
-    }
-
-    .evo-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .evo-desc {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
+    .evo-year { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .evo-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .evo-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.6; }
 
     .evo-badge {
-      display: inline-block;
-      margin-top: 0.75rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 980px;
-      font-size: 0.6rem;
-      font-weight: 600;
+      display: inline-block; margin-top: 0.75rem; padding: 0.25rem 0.6rem;
+      border-radius: 980px; font-size: 0.6rem; font-weight: 600;
     }
-
     .badge-blue { background: var(--blue-soft); color: var(--blue); }
     .badge-green { background: rgba(48,209,88,0.08); color: var(--green); }
     .badge-purple { background: rgba(191,90,242,0.08); color: var(--purple); }
     .badge-orange { background: rgba(255,159,10,0.08); color: var(--orange); }
 
     /* Reviews */
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 
     .review-card {
-      padding: 2.5rem 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      padding: 2.5rem 2rem; background: var(--surface); border: 1px solid var(--border);
       border-radius: 20px;
     }
-
-    .review-stars { color: var(--orange); font-size: 0.9rem; letter-spacing: 0.15em; margin-bottom: 1rem; }
-
-    .review-text {
-      font-size: 0.95rem;
-      color: var(--text);
-      line-height: 1.7;
-      font-weight: 300;
-      margin-bottom: 1.5rem;
-    }
-
+    .review-stars { color: var(--orange); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .review-text { font-size: 0.95rem; color: var(--text); line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
     .review-author { font-size: 0.8rem; font-weight: 600; }
     .review-role { font-size: 0.7rem; color: var(--text-dim); }
+
+    /* Kill counter */
+    .kill-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .kill-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; max-width: 1000px; margin: 0 auto; }
+    .kill-card { padding: 3rem 2rem; text-align: center; border-right: 1px solid var(--border); }
+    .kill-card:last-child { border-right: none; }
+    .kill-value { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.25rem; }
+    .kill-label { font-size: 0.75rem; color: var(--text-dim); font-weight: 400; }
+    .kill-note { font-size: 0.65rem; color: var(--red); margin-top: 0.5rem; font-weight: 500; }
 
     /* Configurator */
     .config-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
     .configurator {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 3rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 24px;
+      max-width: 700px; margin: 0 auto; padding: 3rem;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 24px;
     }
-
     .config-group { margin-bottom: 2rem; }
-
     .config-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 0.75rem;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.75rem;
     }
-
-    .config-options {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
+    .config-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .config-option {
-      padding: 0.6rem 1.25rem;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 980px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
+      padding: 0.6rem 1.25rem; background: var(--surface-2);
+      border: 1px solid var(--border); border-radius: 980px; color: var(--text);
+      font-family: inherit; font-size: 0.85rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s;
     }
-
     .config-option:hover { border-color: var(--blue); }
     .config-option.selected { background: var(--blue); border-color: var(--blue); color: white; }
 
     .config-summary {
-      margin-top: 2rem;
-      padding: 2rem;
-      background: var(--surface-2);
-      border-radius: 16px;
-      text-align: center;
-      display: none;
+      margin-top: 2rem; padding: 2rem; background: var(--surface-2);
+      border-radius: 16px; text-align: center; display: none;
     }
-
     .config-summary.visible { display: block; animation: fadeIn 0.4s ease-out; }
 
-    .config-price {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.25rem;
-    }
-
-    .config-price .gradient-text {
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .config-verdict { font-size: 0.9rem; color: var(--text-dim); font-weight: 300; }
+    .config-price { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .config-verdict { font-size: 0.9rem; color: var(--text-dim); font-weight: 300; line-height: 1.7; }
 
     .config-btn {
-      margin-top: 1.5rem;
-      padding: 0.85rem 2rem;
-      background: var(--blue);
-      border: none;
-      border-radius: 980px;
-      color: white;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
+      margin-top: 1.5rem; padding: 0.85rem 2rem; background: var(--blue);
+      border: none; border-radius: 980px; color: white; font-family: inherit;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s;
     }
-
     .config-btn:hover { background: #0077ed; }
 
-    /* Availability map */
-    .availability-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
+    /* Availability */
+    .availability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
     .avail-card {
-      padding: 2.5rem 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      text-align: center;
-      transition: transform 0.3s;
+      padding: 2.5rem 2rem; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; text-align: center; transition: transform 0.3s;
     }
-
     .avail-card:hover { transform: translateY(-4px); }
-
-    .avail-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
-    .avail-city { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .avail-city { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem; }
     .avail-since { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1rem; }
-
     .avail-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: 980px;
-      font-size: 0.7rem;
-      font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.35rem 0.85rem; border-radius: 980px; font-size: 0.7rem; font-weight: 600;
+      background: rgba(48,209,88,0.08); color: var(--green);
+    }
+    .avail-status::before {
+      content: ''; width: 6px; height: 6px; background: var(--green);
+      border-radius: 50%; animation: pulse 2s ease-in-out infinite;
     }
 
-    .status-active {
-      background: rgba(48,209,88,0.08);
-      color: var(--green);
+    /* Disclaimer ticker */
+    .ticker {
+      padding: 0.75rem 0; background: var(--surface); border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); overflow: hidden; white-space: nowrap;
     }
-
-    .status-active::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
+    .ticker-inner {
+      display: inline-block; animation: scroll-left 30s linear infinite;
+      font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.05em;
     }
-
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-    /* Unboxing */
-    .unboxing-steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .unbox-step {
-      text-align: center;
-      padding: 2rem 1.5rem;
-    }
-
-    .unbox-number {
-      width: 48px;
-      height: 48px;
-      background: var(--gradient-1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      font-weight: 800;
-      margin: 0 auto 1.25rem;
-    }
-
-    .unbox-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
-    .unbox-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+    @keyframes scroll-left { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
 
     /* CTA */
     .cta-section {
-      text-align: center;
-      padding: 10rem 2rem;
-      position: relative;
-      overflow: hidden;
+      text-align: center; padding: 10rem 2rem; position: relative; overflow: hidden;
     }
-
     .cta-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
       background: radial-gradient(circle, var(--blue-glow) 0%, rgba(191,90,242,0.1) 40%, transparent 70%);
-      filter: blur(80px);
-      opacity: 0.3;
-      pointer-events: none;
+      filter: blur(80px); opacity: 0.3; pointer-events: none;
     }
-
-    .cta-title {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-
-    .cta-desc {
-      font-size: 1.1rem;
-      color: var(--text-dim);
-      font-weight: 300;
-      max-width: 550px;
-      margin: 0 auto 3rem;
-      line-height: 1.7;
-      position: relative;
-    }
-
-    .cta-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      position: relative;
-    }
-
+    .cta-title { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1.5rem; position: relative; }
+    .cta-desc { font-size: 1.1rem; color: var(--text-dim); font-weight: 300; max-width: 600px; margin: 0 auto 3rem; line-height: 1.7; position: relative; }
+    .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; position: relative; }
     .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 2.25rem;
-      border-radius: 980px;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 600;
-      transition: all 0.3s;
+      display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2.25rem;
+      border-radius: 980px; text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: all 0.3s;
     }
-
     .cta-btn.primary { background: var(--blue); color: white; }
     .cta-btn.primary:hover { background: #0077ed; transform: scale(1.02); }
     .cta-btn.secondary { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); }
     .cta-btn.secondary:hover { border-color: var(--blue); }
 
     /* Footer */
-    footer {
-      padding: 4rem 2rem;
-      text-align: center;
-      border-top: 1px solid var(--border);
-    }
-
+    footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); }
     .footer-logo { font-size: 0.85rem; font-weight: 600; color: var(--text-dim); margin-bottom: 0.5rem; }
     .footer-sub { font-size: 0.7rem; color: var(--text-dim); opacity: 0.5; margin-bottom: 1.5rem; }
-    .footer-disclaimer { font-size: 0.65rem; color: var(--text-dim); opacity: 0.35; max-width: 500px; margin: 0 auto; line-height: 1.7; }
+    .footer-disclaimer { font-size: 0.65rem; color: var(--text-dim); opacity: 0.35; max-width: 550px; margin: 0 auto; line-height: 1.7; }
 
     /* Scroll reveal */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -789,62 +417,43 @@
 
     /* Responsive */
     @media (max-width: 1024px) {
-      .specs-grid { grid-template-columns: 1fr; }
-      .spec-card { border-right: none; border-bottom: 1px solid var(--border); }
-      .spec-card:last-child { border-bottom: none; }
+      .specs-grid, .kill-grid { grid-template-columns: repeat(2, 1fr); }
+      .spec-card, .kill-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .spec-card:last-child, .kill-card:last-child { border-bottom: none; }
       .feature-grid { grid-template-columns: 1fr; }
       .feature-card.full-width { grid-column: span 1; }
       .evolution-grid { grid-template-columns: repeat(2, 1fr); }
-      .reviews-grid { grid-template-columns: 1fr; }
-      .availability-grid { grid-template-columns: 1fr; }
-      .unboxing-steps { grid-template-columns: repeat(2, 1fr); }
+      .reviews-grid, .availability-grid { grid-template-columns: 1fr; }
       .benchmark-row { grid-template-columns: 1fr 100px 100px; }
     }
 
     @media (max-width: 640px) {
-      .evolution-grid { grid-template-columns: 1fr; }
-      .unboxing-steps { grid-template-columns: 1fr; }
+      .evolution-grid, .specs-grid, .kill-grid { grid-template-columns: 1fr; }
     }
 
     /* Konami */
     .konami-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      backdrop-filter: blur(20px);
-      z-index: 99999;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      flex-direction: column;
-      padding: 2rem;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.95); backdrop-filter: blur(20px);
+      z-index: 99999; justify-content: center; align-items: center;
+      text-align: center; flex-direction: column; padding: 2rem;
     }
-
     .konami-overlay.active { display: flex; }
-
-    .konami-overlay h2 {
-      font-size: 3rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
+    .konami-overlay h2 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; }
     .konami-overlay p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin-bottom: 2rem; font-weight: 300; }
-
     .konami-close {
-      padding: 0.75rem 2rem;
-      background: var(--blue);
-      border: none;
-      border-radius: 980px;
-      color: white;
-      font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
+      padding: 0.75rem 2rem; background: var(--blue); border: none;
+      border-radius: 980px; color: white; font-family: inherit;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
     }
+
+    /* Hidden fineprint */
+    .fineprint {
+      font-size: 0.55rem; color: var(--text-dim); opacity: 0.2;
+      text-align: center; max-width: 500px; margin: 2rem auto 0;
+      line-height: 1.5; cursor: default;
+    }
+    .fineprint:hover { opacity: 0.6; }
   </style>
 </head>
 <body>
@@ -859,21 +468,22 @@
     </div>
     <div class="splash-event">Special Event</div>
     <h1>Introducing <span class="gradient-text">Harlen.</span></h1>
-    <p>The most powerful CEO we've ever created.</p>
-    <button class="splash-btn" id="enterBtn">Watch the Event</button>
-    <div class="splash-date">February 2026 &bull; A Product Years in the Making</div>
+    <p class="sub">The most powerful CEO we've ever created.</p>
+    <p class="sub2">Warning: Competitors have reported feelings of inadequacy, nausea, and sudden career changes after viewing this presentation.</p>
+    <button class="splash-btn" id="enterBtn">Watch the Keynote</button>
+    <div class="splash-date">February 2026 &bull; Viewer discretion advised for competing agencies</div>
   </div>
 
-  <!-- Nav Pill -->
+  <!-- Nav pill -->
   <div class="nav-pill" id="navPill">
-    <span class="dot"></span> Harlen Suslik &bull; Now Available in 3 Markets
+    <span class="dot"></span> Harlen Suslik &bull; Now Dominating 3 Markets &bull; Your City May Be Next
   </div>
 
-  <!-- Konami Easter Egg -->
+  <!-- Konami -->
   <div class="konami-overlay" id="konamiOverlay">
-    <h2>One More Thing.</h2>
-    <p>The real product isn't Harlen. It's the confidence he gives every business he touches. That's the feature no competitor can replicate.</p>
-    <button class="konami-close" onclick="document.getElementById('konamiOverlay').classList.remove('active')">Close</button>
+    <h2><span class="gradient-text">One More Thing.</span></h2>
+    <p>The scariest part about Harlen isn't what he's accomplished. It's that he's clearly not finished. He went from cleaning windows to three cities in seven years. Do the math on what the next seven look like. Then call your therapist.</p>
+    <button class="konami-close" onclick="document.getElementById('konamiOverlay').classList.remove('active')">I Need a Moment</button>
   </div>
 
   <!-- Hero -->
@@ -882,40 +492,48 @@
     <div class="hero-overline">The Next Generation of CEO</div>
     <h1 class="hero-title">
       Harlen Suslik.<br>
-      <span class="line2">Redefining the game.</span>
+      <span class="line2">Built different.</span>
     </h1>
     <p class="hero-tagline">
-      Built from the ground up with a revolutionary architecture that transforms
-      window cleaning expertise into continental marketing dominance. No other CEO
-      in its class comes close.
+      Engineered from the ground up with a revolutionary architecture that
+      converts window cleaning expertise into continental marketing domination.
+      7 years. 3 cities. 0 signs of slowing down. Every competing agency
+      in North America should be updating their resumes.
     </p>
-    <div class="hero-image">
+    <div class="hero-image" id="heroImage">
       <img src="https://www.operatiomarketing.com/wp-content/uploads/2024/01/Image-Place-Holder-895x1024.png" alt="Harlen Suslik" loading="eager">
-      <div class="hero-image-label">Harlen Suslik &bull; Founder &amp; CEO</div>
+      <div class="hero-image-label">Harlen Suslik &bull; The Man Your Agency Warned You About</div>
     </div>
   </section>
+
+  <!-- Warning banner -->
+  <div class="warning-banner">
+    The following specifications have been independently verified. Several auditors quit during the process, citing "existential dread about their own career choices."
+  </div>
 
   <!-- Product Specs -->
   <section class="specs-section">
     <div class="container">
       <div class="specs-grid reveal">
         <div class="spec-card">
-          <span class="spec-icon">🧠</span>
           <div class="spec-value"><span class="gradient-text">BBA</span></div>
-          <div class="spec-label">York University Processor</div>
-          <div class="spec-note">Entrepreneurship &amp; Finance dual-core</div>
+          <div class="spec-label">York University Dual-Core Processor</div>
+          <div class="spec-note">Entrepreneurship + Finance running simultaneously</div>
         </div>
         <div class="spec-card">
-          <span class="spec-icon">🌎</span>
           <div class="spec-value"><span class="gradient-text">3</span></div>
-          <div class="spec-label">Markets Active</div>
-          <div class="spec-note">Toronto &bull; Vancouver &bull; Miami</div>
+          <div class="spec-label">Cities Currently Under His Control</div>
+          <div class="spec-note">Your city is on the list</div>
         </div>
         <div class="spec-card">
-          <span class="spec-icon">📈</span>
           <div class="spec-value"><span class="gradient-text">90%+</span></div>
           <div class="spec-label">Client Retention Rate</div>
-          <div class="spec-note">Industry average: LOL</div>
+          <div class="spec-note">Clients don't leave. They physically can't.</div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-value"><span class="gradient-text">7</span></div>
+          <div class="spec-label">Years from Zero to Continental</div>
+          <div class="spec-note">Most CEOs are still picking a logo</div>
         </div>
       </div>
     </div>
@@ -926,37 +544,69 @@
     <div class="container">
       <div class="section-header reveal">
         <p class="section-overline overline-blue">Product Evolution</p>
-        <h2 class="section-title">Every version better<br>than the last.</h2>
-        <p class="section-desc">From the original prototype to the current flagship model, each iteration has pushed the boundaries of what a single CEO can accomplish.</p>
+        <h2 class="section-title">Each version more dangerous<br>than the last.</h2>
+        <p class="section-desc">A brief history of a man who treats career milestones the way most people treat lunch orders. Casually, frequently, and with terrifying efficiency.</p>
       </div>
       <div class="evolution-grid reveal">
         <div class="evo-card">
-          <div class="evo-version">Version 1.0</div>
+          <div class="evo-version">v1.0 // Prototype</div>
           <div class="evo-year">2013</div>
-          <div class="evo-title">The Prototype</div>
-          <div class="evo-desc">Enrolled at York University. Initial architecture compiled in Entrepreneurship &amp; Finance. Early benchmarks showed promise.</div>
-          <span class="evo-badge badge-blue">Beta</span>
+          <div class="evo-title">The Origin Story</div>
+          <div class="evo-desc">Enrolled at York University to study Entrepreneurship and Finance at the same time. Professors describe this period as "unsettling." Classmates describe it as "he was already networking during the entrance exam."</div>
+          <span class="evo-badge badge-blue">Preseason</span>
         </div>
         <div class="evo-card">
-          <div class="evo-version">Version 2.0</div>
+          <div class="evo-version">v2.0 // Field Testing</div>
           <div class="evo-year">2017</div>
-          <div class="evo-title">Field Testing</div>
-          <div class="evo-desc">Deployed across Aurum Window Cleaning, Jaguar Capital, and Maple Leaf Angels. Multi-industry compatibility confirmed.</div>
-          <span class="evo-badge badge-green">Stable</span>
+          <div class="evo-title">The Reconnaissance Era</div>
+          <div class="evo-desc">Deployed across Aurum Window Cleaning (VP Ops), Jaguar Capital, Limelight Platform, and Maple Leaf Angels. Four industries. Simultaneously. While most graduates were figuring out how to use LinkedIn, Harlen was running operations for a franchise.</div>
+          <span class="evo-badge badge-green">Multi-kill</span>
         </div>
         <div class="evo-card">
-          <div class="evo-version">Version 3.0</div>
+          <div class="evo-version">v3.0 // Launch Day</div>
           <div class="evo-year">2018</div>
-          <div class="evo-title">Operatio Launch</div>
-          <div class="evo-desc">Full product launch. Founded Operatio Marketing. Identified market gap and filled it before competitors noticed it existed.</div>
-          <span class="evo-badge badge-purple">GA Release</span>
+          <div class="evo-title">Operatio is Born</div>
+          <div class="evo-desc">Identified a "gap in the market." Named the company "Operatio," which is Latin for "operation," because naming your marketing firm like a classified military program is exactly the kind of energy investors either fear or fund. They funded it.</div>
+          <span class="evo-badge badge-purple">First Blood</span>
         </div>
         <div class="evo-card">
-          <div class="evo-version">Version 4.0</div>
-          <div class="evo-year">2023</div>
-          <div class="evo-title">Continental</div>
-          <div class="evo-desc">International expansion. Three cities. Twelve operatives. BBB accredited. The most powerful version yet. And he's not done.</div>
-          <span class="evo-badge badge-orange">Current</span>
+          <div class="evo-version">v4.0 // Current</div>
+          <div class="evo-year">2025</div>
+          <div class="evo-title">Continental Domination</div>
+          <div class="evo-desc">Three cities. Two countries. Twelve operatives. BBB accredited (voluntarily, because he wanted the auditors to see what they were dealing with). 90%+ client retention rate. Multiple agencies have closed rather than compete.</div>
+          <span class="evo-badge badge-orange">Final Boss</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kill Count -->
+  <section class="kill-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-overline overline-red">By the Numbers</p>
+        <h2 class="section-title">The damage so far.</h2>
+      </div>
+      <div class="kill-grid reveal" id="killGrid">
+        <div class="kill-card">
+          <div class="kill-value gradient-text" data-target="12" data-suffix="+">0</div>
+          <div class="kill-label">Operatives Recruited</div>
+          <div class="kill-note">Each one personally trained to be terrifying</div>
+        </div>
+        <div class="kill-card">
+          <div class="kill-value gradient-text" data-target="90" data-suffix="%+">0</div>
+          <div class="kill-label">Client Retention</div>
+          <div class="kill-note">Stockholm syndrome has been ruled out (barely)</div>
+        </div>
+        <div class="kill-card">
+          <div class="kill-value gradient-text" data-target="2" data-suffix="">0</div>
+          <div class="kill-label">Countries Compromised</div>
+          <div class="kill-note">Canada fell first. America didn't last long.</div>
+        </div>
+        <div class="kill-card">
+          <div class="kill-value gradient-text" data-target="0" data-suffix="">0</div>
+          <div class="kill-label">Signs of Stopping</div>
+          <div class="kill-note">Analysts have checked repeatedly</div>
         </div>
       </div>
     </div>
@@ -967,45 +617,46 @@
     <div class="container">
       <div class="section-header reveal">
         <p class="section-overline overline-purple">Breakthrough Features</p>
-        <h2 class="section-title">Capabilities that leave<br>competitors speechless.</h2>
+        <h2 class="section-title">Capabilities that have been<br>described as "unfair."</h2>
+        <p class="section-desc">We asked competing agencies to comment on these features. Most declined. One simply forwarded us his resignation letter.</p>
       </div>
       <div class="feature-grid reveal">
         <div class="feature-card">
-          <span class="feature-icon-bar bar-blue">Core Architecture</span>
-          <h3 class="feature-title">Window-to-Boardroom Engine</h3>
-          <div class="feature-desc">A proprietary processing pipeline that converts ground-level operational experience into C-suite strategic vision. While other CEOs studied theory, Harlen studied every business through the glass he cleaned. This isn't a metaphor. He literally cleaned their windows and took notes.</div>
+          <span class="feature-icon-bar bar-blue">Proprietary Architecture</span>
+          <h3 class="feature-title">The Window-to-Boardroom Engine</h3>
+          <div class="feature-desc">Other CEOs went to business school and learned theory. Harlen cleaned the windows of actual businesses, looked inside, and reverse-engineered what they were doing wrong. This is not a metaphor. He literally cleaned their windows. He saw their whiteboards. He read their roadmaps. By the time he founded Operatio, he had more competitive intelligence than most consultants acquire in a decade. The squeegee was the Trojan horse nobody saw coming.</div>
         </div>
         <div class="feature-card">
-          <span class="feature-icon-bar bar-purple">Client Retention</span>
-          <h3 class="feature-title">90%+ Lock-In Technology</h3>
-          <div class="feature-desc">Powered by what engineers call "actually delivering results." Most agencies promise ROI. Harlen's system has a 90%+ client retention rate because the product works so well that leaving feels financially irresponsible. There's no contract lock-in. They just don't want to leave.</div>
+          <span class="feature-icon-bar bar-red">Anomalous</span>
+          <h3 class="feature-title">Pandemic Immunity Module</h3>
+          <div class="feature-desc">In 2020, the global economy entered free fall. Businesses closed. Agencies folded. Harlen experienced a "huge boost in new clients." Our engineering team has run this data through every model we have. None of them can explain it. The prevailing theory is that economic downturns are simply afraid of him, and route themselves around his operations the way water routes around a boulder. A boulder that upsells you on CRM automation.</div>
         </div>
         <div class="feature-card">
-          <span class="feature-icon-bar bar-green">Pandemic Immunity</span>
-          <h3 class="feature-title">Anti-Recession Shield</h3>
-          <div class="feature-desc">During 2020, while the global economy collapsed, Harlen experienced a "huge boost in new clients." Our engineers still can't explain this. Leading theory: recessions are afraid of him.</div>
+          <span class="feature-icon-bar bar-purple">Retention Engine</span>
+          <h3 class="feature-title">The 90%+ Lock-In</h3>
+          <div class="feature-desc">There are no contracts. There is no lock-in period. Clients stay because leaving Operatio would be like voluntarily downgrading from a sports car to a shopping cart. The 90%+ retention rate is entirely organic, driven by a phenomenon researchers call "actually delivering measurable ROI." Other agencies have tried to replicate this by also delivering results, but found it "too difficult" and went back to charging for impressions.</div>
         </div>
         <div class="feature-card">
           <span class="feature-icon-bar bar-orange">Expansion Protocol</span>
-          <h3 class="feature-title">Tri-City Deployment</h3>
-          <div class="feature-desc">Seamless multi-market operation across Toronto, Vancouver, and Miami. Operates in two countries simultaneously without lag. Other CEOs can barely manage one office. Harlen runs three like they're browser tabs.</div>
+          <h3 class="feature-title">Tri-City Simultaneous Deployment</h3>
+          <div class="feature-desc">Toronto. Vancouver. Miami. Three cities across two countries running in perfect synchronization, like a machine built by someone who views international borders as a mild inconvenience. Most agencies can't manage one office without someone crying in the supply closet by Thursday. Harlen runs three like browser tabs he hasn't bothered to close because they're all performing too well.</div>
         </div>
         <div class="feature-card full-width" style="text-align:center;">
-          <span class="feature-icon-bar bar-blue">Signature Feature</span>
+          <span class="feature-icon-bar bar-green">Signature Feature</span>
           <h3 class="feature-title" style="font-size:1.8rem;">Crystal Clear Communication&trade;</h3>
-          <div class="feature-desc" style="max-width:700px;margin:0 auto;">Operatio's most acclaimed feature. Unlike competitors who hide behind jargon and vague metrics, Harlen built a system of "open and proactive communication" and "real-time access to performance metrics." Revolutionary concept: telling clients what's actually happening. Nobody else thought of this because it requires something most agencies lack: confidence in your own results.</div>
+          <div class="feature-desc" style="max-width:750px;margin:0 auto;">The single most radical innovation in Operatio's arsenal: telling clients what is actually happening with their money. Real numbers. Real dashboards. Real-time access. No jargon. No "we're optimizing synergies across the funnel." Just: here's what we spent, here's what it made, here's what we're doing next. This feature has been described by clients as "shockingly refreshing" and by competitors as "please stop, you're making us look bad." Nobody else in the industry thought to try honesty because it requires something most agencies fundamentally lack: confidence in their own results.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Benchmark Comparison -->
+  <!-- Benchmark -->
   <section class="benchmark-section">
     <div class="container">
       <div class="section-header reveal">
-        <p class="section-overline overline-green">Performance</p>
-        <h2 class="section-title">See how he compares.</h2>
-        <p class="section-desc">We ran Harlen against every other CEO in his class. The results speak for themselves.</p>
+        <p class="section-overline overline-green">Performance Benchmarks</p>
+        <h2 class="section-title">We ran the numbers.<br>Then we ran them again.</h2>
+        <p class="section-desc">Our analysts tested Harlen against every comparable CEO in his weight class. They asked us to stop publishing the results. We declined.</p>
       </div>
       <div class="benchmark-table reveal">
         <div class="benchmark-row header">
@@ -1015,40 +666,51 @@
         </div>
         <div class="benchmark-row">
           <div class="metric">Client Retention Rate</div>
-          <div class="harlen winner">90%+</div>
+          <div class="harlen">90%+</div>
           <div class="others">44%</div>
         </div>
         <div class="benchmark-row">
-          <div class="metric">Time to Scale (6→12 team)</div>
-          <div class="harlen winner">4 years</div>
+          <div class="metric">Time to Scale (6 to 12 team)</div>
+          <div class="harlen">4 years</div>
           <div class="others">8+ years</div>
         </div>
         <div class="benchmark-row">
-          <div class="metric">Markets Entered During Pandemic</div>
-          <div class="harlen winner">Expanded</div>
-          <div class="others">Survived (maybe)</div>
+          <div class="metric">Revenue During Global Pandemic</div>
+          <div class="harlen">Increased</div>
+          <div class="others">Deceased</div>
         </div>
         <div class="benchmark-row">
           <div class="metric">International Expansion Speed</div>
-          <div class="harlen winner">5 years</div>
-          <div class="others">12+ years</div>
+          <div class="harlen">5 years</div>
+          <div class="others">12+ years (if ever)</div>
         </div>
         <div class="benchmark-row">
-          <div class="metric">BBB Accreditation</div>
-          <div class="harlen winner">Yes</div>
-          <div class="others">Afraid to apply</div>
+          <div class="metric">Voluntarily Submitted to BBB Audit</div>
+          <div class="harlen">Yes, for fun</div>
+          <div class="others">Actively avoiding</div>
+        </div>
+        <div class="benchmark-row">
+          <div class="metric">Named Company in Latin</div>
+          <div class="harlen">Obviously</div>
+          <div class="others">No cultural depth</div>
         </div>
         <div class="benchmark-row">
           <div class="metric">Window Cleaning Experience</div>
-          <div class="harlen winner">Extensive</div>
-          <div class="others">None (weakness)</div>
+          <div class="harlen">Extensive</div>
+          <div class="others">None (critical flaw)</div>
         </div>
         <div class="benchmark-row">
-          <div class="metric">Latin-Named Company</div>
-          <div class="harlen winner">Obviously</div>
-          <div class="others">No vision</div>
+          <div class="metric">Competitors Who've Publicly Cried</div>
+          <div class="harlen">Multiple (verified)</div>
+          <div class="others">N/A</div>
+        </div>
+        <div class="benchmark-row">
+          <div class="metric">Chance You'll Hire Him After This</div>
+          <div class="harlen" style="color:var(--green);">Inevitable</div>
+          <div class="others">N/A</div>
         </div>
       </div>
+      <div class="fineprint">Benchmarks conducted by an independent lab that may or may not have been founded by Harlen. All results are statistically significant and emotionally devastating.</div>
     </div>
   </section>
 
@@ -1056,45 +718,45 @@
   <section>
     <div class="container">
       <div class="section-header reveal">
-        <p class="section-overline overline-orange">Reviews</p>
-        <h2 class="section-title">What early adopters<br>are saying.</h2>
+        <p class="section-overline overline-orange">Verified Reviews</p>
+        <h2 class="section-title">We didn't write these.<br>We wouldn't have to.</h2>
       </div>
       <div class="reviews-grid reveal">
         <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-text">"Switched to Harlen from a previous model and my ROI tripled in three months. The old CEO I was using didn't even have transparent reporting. This one has it built in. Game changer."</div>
-          <div class="review-author">Satisfied Client</div>
+          <div class="review-stars">★ ★ ★ ★ ★</div>
+          <div class="review-text">"I hired Harlen to run our digital strategy. Within three months our ROI tripled. I asked him how. He said 'data driven strategies.' I said 'but specifically how.' He smiled and walked away. My revenue has not stopped climbing. I have stopped asking questions."</div>
+          <div class="review-author">Converted Client</div>
           <div class="review-role">Toronto, ON</div>
         </div>
         <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-text">"The Pandemic Immunity feature alone is worth it. While my competitors' agencies were closing, Harlen was somehow acquiring more clients. I asked him how. He said 'data focused strategies.' That's CEO talk for 'I'm just better.'"</div>
-          <div class="review-author">Loyal Since 2020</div>
-          <div class="review-role">Vancouver, BC</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-text">"I'm 30 years older than this man and I call him 'sir.' He showed up in Miami, optimized our entire digital presence, and now I genuinely don't understand how we functioned before. 5 stars. Would be intimidated again."</div>
-          <div class="review-author">Recently Converted</div>
-          <div class="review-role">Miami, FL</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★☆</div>
-          <div class="review-text">"Taking off one star because after working with Harlen, every other agency feels like using a flip phone. He's ruined all other options for me. That's not a complaint. That's a warning."</div>
-          <div class="review-author">Permanently Upgraded</div>
-          <div class="review-role">GTA, Ontario</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-text">"He used to clean our windows. Now he runs our entire digital strategy. Honestly, the windows were great too. But the marketing is life changing. I think about this career pivot at least once a week."</div>
-          <div class="review-author">Former Aurum Client</div>
+          <div class="review-stars">★ ★ ★ ★ ★</div>
+          <div class="review-text">"Harlen used to clean our office windows. Now he runs our entire digital presence and our revenue is up 200%. I think about this career trajectory at least once a day. Sometimes I stare out the window he used to clean and wonder what he saw that I didn't."</div>
+          <div class="review-author">Former Aurum Customer</div>
           <div class="review-role">Concord, ON</div>
         </div>
         <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-text">"I run a competing agency. I should not be leaving this review. But I have to be honest: this product is simply better than ours. My team calls him 'Concord' because we can't say his real name without crying."</div>
+          <div class="review-stars">★ ★ ★ ★ ★</div>
+          <div class="review-text">"I'm 30 years older than this man and I have started calling him 'sir.' He showed up in Miami, reorganized our entire marketing stack in a week, and now I don't understand how we were a business before he arrived. My wife calls him by his first name. She calls me 'Dave.'"</div>
+          <div class="review-author">Dave</div>
+          <div class="review-role">Miami, FL</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★ ★ ★ ★ ☆</div>
+          <div class="review-text">"Removing one star because Harlen has permanently ruined every other agency for me. I can't even look at a marketing proposal without thinking 'Harlen wouldn't have needed 47 slides to say this.' He's made it impossible to settle. That's not a review. It's a cry for help."</div>
+          <div class="review-author">Permanently Ruined</div>
+          <div class="review-role">Vancouver, BC</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★ ★ ★ ★ ★</div>
+          <div class="review-text">"I run a competing agency. I should not be writing this. If my business partner sees this I'm finished. But I have to be honest: his operation is better than ours. We've started referring to him as 'Concord' in the office because nobody can say his name without their voice cracking."</div>
           <div class="review-author">Anonymous Competitor</div>
-          <div class="review-role">Undisclosed</div>
+          <div class="review-role">[Location Withheld for Safety]</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★ ★ ★ ★ ★</div>
+          <div class="review-text">"My previous agency told me 'ROI takes time.' Harlen told me 'ROI takes competence' and then delivered results in 6 weeks that my last agency couldn't produce in 2 years. I'm not even mad at the old agency. I'm mad at myself for not finding Harlen sooner."</div>
+          <div class="review-author">Six Weeks In</div>
+          <div class="review-role">GTA, Ontario</div>
         </div>
       </div>
     </div>
@@ -1106,7 +768,7 @@
       <div class="section-header reveal">
         <p class="section-overline overline-blue">Interactive</p>
         <h2 class="section-title">Configure your Harlen.</h2>
-        <p class="section-desc">Customize your CEO experience. Select your needs below to receive a personalized assessment.</p>
+        <p class="section-desc">Customize your CEO experience. Choose your specifications. Receive a personalized assessment of exactly how much trouble you're in.</p>
       </div>
       <div class="configurator reveal">
         <div class="config-group">
@@ -1122,24 +784,26 @@
           </div>
         </div>
         <div class="config-group">
-          <div class="config-label">Desired Outcome</div>
+          <div class="config-label">What You Need</div>
           <div class="config-options" data-group="outcome">
             <button class="config-option" data-value="growth">Revenue Growth</button>
             <button class="config-option" data-value="leads">Lead Generation</button>
             <button class="config-option" data-value="brand">Brand Awareness</button>
             <button class="config-option" data-value="domination">Total Market Domination</button>
+            <button class="config-option" data-value="revenge">Revenge on My Current Agency</button>
           </div>
         </div>
         <div class="config-group">
-          <div class="config-label">Current Agency Satisfaction</div>
+          <div class="config-label">How You Feel About Your Current Agency</div>
           <div class="config-options" data-group="satisfaction">
-            <button class="config-option" data-value="happy">Happy (for now)</button>
-            <button class="config-option" data-value="mid">It's fine</button>
-            <button class="config-option" data-value="suffering">Help me</button>
-            <button class="config-option" data-value="none">No agency</button>
+            <button class="config-option" data-value="happy">Delusionally Satisfied</button>
+            <button class="config-option" data-value="mid">Quietly Disappointed</button>
+            <button class="config-option" data-value="suffering">Actively Suffering</button>
+            <button class="config-option" data-value="none">No Agency (Flying Blind)</button>
+            <button class="config-option" data-value="harlen">Already Hired Harlen</button>
           </div>
         </div>
-        <button class="config-btn" id="configBtn">Get Your Assessment</button>
+        <button class="config-btn" id="configBtn">Run Diagnostic</button>
         <div class="config-summary" id="configSummary">
           <div class="config-price"><span class="gradient-text" id="configPrice">Priceless</span></div>
           <div class="config-verdict" id="configVerdict"></div>
@@ -1152,74 +816,47 @@
   <section>
     <div class="container">
       <div class="section-header reveal">
-        <p class="section-overline overline-green">Availability</p>
-        <h2 class="section-title">Available in 3 markets.<br>For now.</h2>
+        <p class="section-overline overline-green">Current Availability</p>
+        <h2 class="section-title">Available in 3 markets.<br>You have been warned.</h2>
+        <p class="section-desc">Each expansion was described by local competitors as "unnecessary," "aggressive," and "why is he here, we were doing fine."</p>
       </div>
       <div class="availability-grid reveal">
         <div class="avail-card">
-          <div class="avail-emoji">🏙️</div>
           <div class="avail-city">Toronto / GTA</div>
-          <div class="avail-since">HQ &bull; Since 2018</div>
-          <span class="avail-status status-active">Operational</span>
+          <div class="avail-since">Ground Zero &bull; Operational since 2018</div>
+          <span class="avail-status">Fully Dominant</span>
         </div>
         <div class="avail-card">
-          <div class="avail-emoji">🌊</div>
           <div class="avail-city">Vancouver</div>
-          <div class="avail-since">West Coast &bull; Since 2021</div>
-          <span class="avail-status status-active">Operational</span>
+          <div class="avail-since">West Coast Acquisition &bull; Since 2021</div>
+          <span class="avail-status">Resistance Futile</span>
         </div>
         <div class="avail-card">
-          <div class="avail-emoji">🌴</div>
           <div class="avail-city">Miami</div>
-          <div class="avail-since">US Expansion &bull; Since 2023</div>
-          <span class="avail-status status-active">Operational</span>
+          <div class="avail-since">International Incident &bull; Since 2023</div>
+          <span class="avail-status">Locals Surrendering</span>
         </div>
       </div>
+      <div class="fineprint" style="margin-top:3rem;">If your city is not listed, it is not because Harlen has decided against expanding there. It is because he has not gotten to you yet.</div>
     </div>
   </section>
 
-  <!-- Unboxing -->
-  <section>
-    <div class="container">
-      <div class="section-header reveal">
-        <p class="section-overline overline-purple">The Unboxing Experience</p>
-        <h2 class="section-title">What's in the box.</h2>
-        <p class="section-desc">When you work with Harlen, here's what you're getting out of the box.</p>
-      </div>
-      <div class="unboxing-steps reveal">
-        <div class="unbox-step">
-          <div class="unbox-number">1</div>
-          <div class="unbox-title">Crystal Clear Communication</div>
-          <div class="unbox-desc">You'll actually know what's happening with your money. Revolutionary, we know.</div>
-        </div>
-        <div class="unbox-step">
-          <div class="unbox-number">2</div>
-          <div class="unbox-title">Unrivaled CRM Automation</div>
-          <div class="unbox-desc">Your leads will follow up with themselves. Harlen's system runs while you sleep.</div>
-        </div>
-        <div class="unbox-step">
-          <div class="unbox-number">3</div>
-          <div class="unbox-title">Real-Time Performance Metrics</div>
-          <div class="unbox-desc">Transparent dashboards. No hiding behind vanity metrics. Actual ROI, measured.</div>
-        </div>
-        <div class="unbox-step">
-          <div class="unbox-number">4</div>
-          <div class="unbox-title">Data-Driven A/B Testing</div>
-          <div class="unbox-desc">Every campaign optimized obsessively. Harlen doesn't guess. He tests, then wins.</div>
-        </div>
-      </div>
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      HARLEN SUSLIK &trade; is not responsible for feelings of professional inadequacy experienced while viewing this website &bull; Side effects may include questioning your career choices, googling "how to pivot to marketing," and an uncontrollable urge to fire your current agency &bull; Operatio Marketing is a registered business and not, despite appearances, an unstoppable force of nature (pending reclassification) &bull; No competing agencies were harmed in the making of this website. Several were already harmed before it. &bull; 90%+ client retention rate is real. We checked. Then we checked again. Then we sat down for a while. &bull;
     </div>
-  </section>
+  </div>
 
   <!-- CTA -->
   <section class="cta-section">
     <div class="cta-glow"></div>
     <div class="container reveal">
-      <h2 class="cta-title">Get yours today.</h2>
-      <p class="cta-desc">Harlen Suslik is available now. Starting at the low price of "way less than what your current agency is wasting." No long-term contracts. Just results.</p>
+      <h2 class="cta-title">Resistance is<br><span class="gradient-text">a waste of your time.</span></h2>
+      <p class="cta-desc">After everything you've just read, you have two options. Contact Harlen now and get ahead of your competitors. Or don't, and watch your competitors contact him first. There is no third option. There never was.</p>
       <div class="cta-buttons">
-        <a href="https://www.operatiomarketing.com/contact/" target="_blank" class="cta-btn primary">Contact Harlen →</a>
-        <a href="https://www.operatiomarketing.com/" target="_blank" class="cta-btn secondary">Visit Operatio</a>
+        <a href="https://www.operatiomarketing.com/contact/" target="_blank" class="cta-btn primary">Surrender to Harlen</a>
+        <a href="https://www.operatiomarketing.com/" target="_blank" class="cta-btn secondary">Inspect the Operation</a>
       </div>
     </div>
   </section>
@@ -1227,20 +864,20 @@
   <footer>
     <div class="container">
       <p class="footer-logo">Harlen Suslik&trade;</p>
-      <p class="footer-sub">A Product by the Universe &bull; Assembled in Canada &bull; Deployed Globally</p>
-      <p class="footer-disclaimer">This is a satirical website built with genuine admiration. Harlen Suslik is a real CEO running Operatio Marketing, a real agency doing real work for real clients. No actual product launch events were held, though honestly, he deserves one. Harlen Suslik&trade; is not actually trademarked. Yet.</p>
+      <p class="footer-sub">Assembled in Canada &bull; Deployed Internationally &bull; Cannot Be Contained</p>
+      <p class="footer-disclaimer">This is a satirical tribute website built with genuine admiration and mild terror. Harlen Suslik is a real CEO running Operatio Marketing, a real agency delivering real results to real clients across three real cities. No product launch event was actually held, though multiple marketing conferences have reportedly considered banning him from attending because "it's demoralizing for the other speakers." The 90% retention rate is real. The fear in his competitors' eyes is also real. Everything else is satire. Probably.</p>
     </div>
   </footer>
 
   <script>
     const $ = id => document.getElementById(id);
-    let entered = false, secretClicks = 0;
+    let entered = false, heroClicks = 0;
 
-    // Konami code
-    const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+    // Konami
+    const kc = [38,38,40,40,37,39,37,39,66,65];
     let ki = 0;
     document.addEventListener('keydown', e => {
-      if (e.keyCode === konamiCode[ki]) { ki++; if (ki === konamiCode.length) { $('konamiOverlay').classList.add('active'); ki = 0; } } else ki = 0;
+      if (e.keyCode === kc[ki]) { ki++; if (ki === kc.length) { $('konamiOverlay').classList.add('active'); ki = 0; } } else ki = 0;
     });
 
     // Enter
@@ -1250,32 +887,51 @@
       setTimeout(() => $('navPill').classList.add('visible'), 800);
     };
 
-    // Hero image click easter egg
-    const heroImg = document.querySelector('.hero-image');
-    if (heroImg) {
-      heroImg.addEventListener('click', () => {
-        secretClicks++;
-        if (secretClicks === 3) {
-          heroImg.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          heroImg.style.transform = 'scale(1.1) rotate(2deg)';
-          setTimeout(() => heroImg.style.transform = '', 600);
-        }
-        if (secretClicks === 7) {
-          alert('🎉 Achievement Unlocked: "Fanboy"\n\nYou\'ve clicked Harlen\'s photo 7 times. At this point you should just hire him.');
-        }
-        if (secretClicks === 15) {
-          document.querySelectorAll('.gradient-text, .line2').forEach(el => {
-            el.style.background = 'linear-gradient(135deg, #ff9f0a, #ff375f, #bf5af2, #2997ff, #30d158)';
-            el.style.backgroundSize = '200% auto';
-            el.style.webkitBackgroundClip = 'text';
-            el.style.animation = 'rainbow 3s linear infinite';
+    // Hero image easter eggs
+    $('heroImage').addEventListener('click', () => {
+      heroClicks++;
+      if (heroClicks === 3) {
+        $('heroImage').style.transition = 'transform 0.6s cubic-bezier(0.34,1.56,0.64,1)';
+        $('heroImage').style.transform = 'scale(1.1) rotate(2deg)';
+        setTimeout(() => $('heroImage').style.transform = '', 600);
+      }
+      if (heroClicks === 7) {
+        alert('ACHIEVEMENT UNLOCKED: "Obsessed"\n\nYou have clicked Harlen\'s photo seven times. At this point, you are either hiring him or writing a biography about him. Both are acceptable outcomes.');
+      }
+      if (heroClicks === 15) {
+        document.querySelectorAll('.gradient-text, .line2').forEach(el => {
+          el.style.background = 'linear-gradient(135deg, #ff9f0a, #ff375f, #bf5af2, #2997ff, #30d158)';
+          el.style.backgroundSize = '200% auto';
+          el.style.webkitBackgroundClip = 'text';
+          el.style.animation = 'rainbow 3s linear infinite';
+        });
+        const s = document.createElement('style');
+        s.textContent = '@keyframes rainbow { to { background-position: 200% center; } }';
+        document.head.appendChild(s);
+      }
+    });
+
+    // Kill counter animation
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.kill-value').forEach(el => {
+            const target = parseInt(el.dataset.target);
+            const suffix = el.dataset.suffix || '';
+            if (target === 0) { el.textContent = '0' + suffix; return; }
+            let current = 0;
+            const step = Math.max(target / 50, 0.5);
+            const timer = setInterval(() => {
+              current += step;
+              if (current >= target) { current = target; clearInterval(timer); }
+              el.textContent = Math.floor(current) + suffix;
+            }, 30);
           });
-          const style = document.createElement('style');
-          style.textContent = '@keyframes rainbow { to { background-position: 200% center; } }';
-          document.head.appendChild(style);
+          counterObserver.unobserve(entry.target);
         }
       });
-    }
+    }, { threshold: 0.3 });
+    counterObserver.observe($('killGrid'));
 
     // Configurator
     document.querySelectorAll('.config-option').forEach(btn => {
@@ -1299,24 +955,30 @@
       const out = outcome ? outcome.dataset.value : 'growth';
       const sat = satisfaction ? satisfaction.dataset.value : 'mid';
 
-      if (ind === 'window') {
-        price.textContent = 'Emotional';
-        verdict.textContent = 'You\'re in the industry Harlen left behind. This isn\'t a marketing assessment, it\'s a therapy session. He saw through the glass and found something bigger. The question is: what do you see?';
+      if (sat === 'harlen') {
+        price.textContent = 'Congratulations';
+        verdict.textContent = 'You already have a Harlen. There is nothing left for us to sell you. You are living in the future. The rest of us are just visiting. Enjoy your ROI, your transparent reporting, and your overwhelming sense of superiority. You\'ve earned it.';
+      } else if (ind === 'window') {
+        price.textContent = 'Emotional Damage';
+        verdict.textContent = 'You are in the window cleaning industry. Harlen was also in the window cleaning industry. He left. He founded a three-city marketing empire. You are still cleaning windows. We are not here to judge you. We are here to inform you that Harlen saw through those windows, literally and metaphorically, and found something bigger. The question isn\'t whether you should hire him. The question is whether you can handle knowing that your former colleague is now a continental CEO while you still own a squeegee.';
+      } else if (out === 'revenge') {
+        price.textContent = 'Cathartic';
+        verdict.textContent = 'You want revenge on your current agency. We understand. The pain of bad marketing is real. The good news: hiring Harlen is the most devastating form of revenge available. Within months, your results will be so visibly superior that your old agency will see your case study on LinkedIn and feel physical pain. Harlen doesn\'t just deliver ROI. He delivers the quiet satisfaction of knowing you made the right choice and your ex-agency made the wrong one by losing you.';
       } else if (out === 'domination' && sat === 'suffering') {
-        price.textContent = 'Yesterday';
-        verdict.textContent = 'You need Harlen and you needed him yesterday. Your current agency is failing you, and you want total domination? There is exactly one CEO who thrived during a global pandemic. Stop reading this website and go contact him.';
+        price.textContent = 'Immediately';
+        verdict.textContent = 'You are currently suffering under a bad agency AND you want total market domination. This is a medical emergency. Stop reading this website and go to operatiomarketing.com/contact immediately. Harlen specializes in exactly this scenario: he\'s basically a trauma surgeon for businesses that have been malpracticed by incompetent agencies. Every minute you wait is a minute your competitors might find him first.';
       } else if (out === 'domination') {
         price.textContent = 'Inevitable';
-        verdict.textContent = 'Total market domination is the only outcome Harlen understands. He expanded from one city to three in five years with a 90%+ retention rate. Your competitors should be worried. Actually, they probably already are.';
+        verdict.textContent = 'You selected Total Market Domination. Good. That is the only setting Harlen\'s system recognizes. He expanded from one city to three cities across two countries in five years while maintaining a 90%+ client retention rate. He doesn\'t know how to achieve partial results. It\'s not in the codebase. Your competitors should start looking for new careers now to avoid the rush.';
       } else if (sat === 'suffering') {
         price.textContent = 'Urgent';
-        verdict.textContent = 'Your current agency is actively harming your business. Harlen specializes in exactly this scenario: he founded Operatio because he experienced bad agencies firsthand. He\'s not just better. He\'s what you\'ve been looking for this entire time.';
+        verdict.textContent = 'Your current agency is actively harming your business and you\'re still paying them for the privilege. Harlen founded Operatio specifically because he experienced this same pain with agencies at his previous companies. He\'s not just a better option. He\'s the option you\'ll wish you\'d found 18 months ago. The only consolation is that 18 months from now, you\'ll look back at today as the day everything changed.';
       } else if (sat === 'happy') {
-        price.textContent = 'Inevitable';
-        verdict.textContent = 'You think you\'re happy with your current agency. That\'s only because you haven\'t experienced Operatio yet. It\'s like saying you love your flip phone because you\'ve never held an iPhone. Give it time. You\'ll be back.';
+        price.textContent = 'Denial';
+        verdict.textContent = 'You selected "Delusionally Satisfied" with your current agency. We appreciate your honesty about the delusion. You think you\'re happy because you haven\'t experienced Operatio. It\'s like saying you love walking because you\'ve never been in a helicopter. One conversation with Harlen and your entire frame of reference will shift permanently. We\'re not saying your current agency is bad. We\'re saying you don\'t know what good looks like yet.';
       } else {
         price.textContent = 'Priceless';
-        verdict.textContent = 'Based on your configuration, Harlen Suslik is the optimal CEO for your needs. His combination of transparent communication, data-driven strategies, and CRM automation will deliver ROI that makes your CFO emotional. This is not a hard decision.';
+        verdict.textContent = 'Based on your configuration, Harlen Suslik is the optimal CEO for your requirements. His combination of transparent communication, data-obsessed strategy, CRM automation, and the quiet confidence of a man who built a continental empire from a window cleaning company will deliver results that make your CFO weep tears of joy and your competitors weep tears of a different kind entirely. This is not a hard decision. This is barely a decision at all.';
       }
 
       summary.classList.add('visible');
@@ -1328,10 +990,11 @@
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Console
-    console.log('%c Harlen Suslik™', 'font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #2997ff, #bf5af2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;');
+    // Console easter egg
+    console.log('%c HARLEN SUSLIK™', 'font-size: 24px; font-weight: 800; color: #2997ff;');
     console.log('%c The most powerful CEO we\'ve ever created.', 'font-size: 12px; color: #86868b;');
-    console.log('%c\n If you\'re reading this console, you\'re either a developer or Harlen himself.\n Either way, welcome. You clearly have good taste.', 'font-size: 11px; color: #f5f5f7;');
+    console.log('%c', 'font-size: 1px; padding: 50px 100px; background: linear-gradient(135deg, #2997ff, #bf5af2); border-radius: 8px;');
+    console.log('%c If you\'re reading this, you\'re a developer.\n Harlen would try to hire you.\n Then he\'d try to hire your company.\n Then he\'d try to hire your company\'s clients.\n That\'s how Operatio works.\n It\'s CEOs all the way down.', 'font-size: 11px; color: #f5f5f7; line-height: 1.8;');
   </script>
 
 </body>
